@@ -1,0 +1,236 @@
+/* Prevent text selection */
+body, img {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+
+/* ------------------ */
+/* Prompt Submission  */
+/* ------------------ */
+
+/* Adds padding to ensure content doesn't touch the edges of its container. */
+#prompt-submission-container {
+  width: calc(60% - 25px); 
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+  margin-top: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 25px;
+  padding-bottom: 5px;
+  background-color: #eff9f5; /* Light green background for the container */
+  border-radius: 8px; /* Rounded edges */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border: 1px solid #ddd;
+}
+
+/* Custom width for the input group */
+.input-group {
+  width: calc(60% - 25px); /* Full width minus padding */
+}
+
+.generate-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Styles for the parent container of the button */
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the button to the right */
+}
+
+
+/* ----------------- */
+/*   Loading Button  */
+/* ----------------- */
+
+/* Defines the styling for the loading button which is displayed when models are not done generating */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of other content */
+    transition: visibility 0.3s, opacity 0.3s linear;
+}
+
+.loading-overlay.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.loader {
+    border: 12px solid #f3f3f3;
+    border-top: 12px solid #48996D;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 10px; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ----------------- */
+/* ----------------- */
+/* ----------------- */
+
+:root {
+    --green-1: #10724f;
+    --green-2: #48996d;
+    --green-3: #87c7b3;
+    --green-4: #eff9f5;
+    --green-5: #f7fcfa;
+    --grey-1: #222222;
+    --grey-2: #797b7b;
+    --grey-3: #a4aca8;
+    --grey-4: #dee4e1;
+    --grey-5: #f8f9f8;
+    --blue-1: #1860a8;
+    --blue-2: #435188;
+  }
+  
+  .h1 {
+    color: #000;
+    font-size: 48px;
+    font-family: Karla;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 58px;
+    letter-spacing: -0.96px;
+  }
+  
+  .h2 {
+    color: #000;
+    font-size: 36px;
+    font-family: Karla;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 46px;
+    letter-spacing: -0.432px;
+  }
+  
+  .h3 {
+    color: #000;
+    font-size: 28px;
+    font-family: Karla;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.336px;
+  }
+  
+  .h4 {
+    color: #000;
+    font-size: 20px;
+    font-family: Karla;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 30px;
+  }
+  
+  .body-1-medium {
+    color: var(--gray-3);
+    font-size: 16px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+  }
+  
+  .body-4-medium {
+    color: var(--gray-2, #797b7b);
+    font-size: 10px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  
+  .button-font-1 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: -0.288px;
+  }
+  
+  .button-font-2 {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: -0.216px;
+  }
+  
+  a {
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .previous {
+    background-color: var(--bs-white);
+    color: black;
+    font-size: 35px;
+  }
+  
+  form {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--green-2);
+    border-radius: 8px 8px 8px 8px;
+    background-color: #eff9f5;
+  }
+  
+  form input {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    background-color: #eff9f5;
+  }
+  
+  .btn {
+    --bs-btn-hover-bg: var(--green-1);
+  }
+  
+  .button-search {
+    height: 54px;
+    width: 120px;
+  }
+  
+  .form-switch .form-check-input {
+    background-color: var(--grey-4);
+    border: var(--grey-5);
+  }
+  
+  .form-switch .form-check-input:checked {
+    background-color: var(--green-1);
+  }
+  
+  .form-switch .form-check-input:focus {
+    box-shadow: 0 0 1px var(--green-1);
+  }
+  
+  #search-image-source-dropdown .btn,
+  #search-image-source-dropdown .dropdown-menu {
+    background-color: var(--bs-white);
+    color: var(--grey-1);
+    border: var(--grey-4) 1px solid;
+    border-radius: 16px;
+    font-size: 14px;
+  }

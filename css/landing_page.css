@@ -1,0 +1,326 @@
+/* Base styles for the landing page */
+:root {
+    --primary-color: #10724f;
+    --secondary-color: #f8f9fa;
+    --text-color: #333;
+    --light-text: #666;
+    --accent-color: #24b47e;
+    --border-radius: 8px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    position: relative;
+    overflow-x: hidden;
+    font-size: 15px;
+}
+
+/* Legacy styles for backward compatibility */
+#title {
+    font-size: 3.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.7rem;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    gap: 2.2rem;
+    margin: 1.25rem 0;
+}
+
+.icon-container div {
+    text-align: center;
+}
+
+.icon-container svg {
+    width: 2rem;
+    height: 2rem;
+    color: var(--primary-color);
+}
+
+.icon-container div a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.icon-container div a:hover {
+    transform: scale(1.1);
+}
+
+/* Flag selection styles */
+.language-selection {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.flag-button {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s;
+}
+
+.flag-button:hover {
+    transform: scale(1.05);
+}
+
+.flag {
+    width: 90px;
+    height: 60px;
+    background-size: cover;
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+}
+
+.flag-us {
+    background-image: url('/static/mirage/images/flag-us.png');
+}
+
+.flag-br {
+    background-image: url('/static/mirage/images/flag-br.png');
+}
+
+/* New styles for the enhanced design */
+.landing-container {
+    max-width: 1120px;
+    width: 100%;
+    padding: 1.25rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 0 auto;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.logo-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-subtitle {
+    font-size: 1rem;
+    color: var(--light-text);
+    margin-top: 0.4rem;
+    font-weight: 400;
+    max-width: 600px;
+    text-align: center;
+}
+
+.logo-acronym {
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+    margin-top: 0.3rem;
+    font-weight: 500;
+}
+
+.features-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 1.25rem 0;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 1.1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 240px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+}
+
+.feature-title {
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    font-size: 1rem;
+}
+
+.feature-description {
+    color: var(--light-text);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.actions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.6rem;
+}
+
+.language-prompt {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+}
+
+.flag-label {
+    font-weight: 500;
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.additional-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.link-button {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 0.9rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    font-size: 0.85rem;
+}
+
+.link-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    color: var(--primary-color);
+}
+
+.link-icon {
+    color: var(--primary-color);
+}
+
+.footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: var(--light-text);
+    font-size: 0.75rem;
+}
+
+.citation-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+}
+
+.citation-button:hover {
+    background-color: #0d5f42;
+    transform: translateY(-2px);
+}
+
+.decorative-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    opacity: 0.05;
+    z-index: -1;
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    left: -100px;
+    animation: float 8s ease-in-out infinite;
+}
+
+.circle-2 {
+    width: 500px;
+    height: 500px;
+    bottom: -200px;
+    right: -200px;
+    animation: float 10s ease-in-out infinite alternate;
+}
+
+@media (max-width: 768px) {
+    .logo-title {
+        font-size: 3rem;
+    }
+    
+    .language-selection {
+        flex-direction: column;
+    }
+    
+    .flag-button {
+        width: 120px;
+    }
+    
+    .flag {
+        width: 80px;
+        height: 53px;
+    }
+    
+    .additional-links {
+        flex-direction: column;
+    }
+    
+    .icon-container {
+        gap: 1rem;
+    }
+}
+
+/* Add animation for decorative circles */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

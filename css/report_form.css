@@ -1,0 +1,110 @@
+/* ----------------- */
+/* Report Form Style */
+/* ----------------- */
+
+/* Flex container for forms on the right side */
+#form-container {
+    display: none; /* Hide initially */
+    margin-right: 25px;
+    margin-top: 25px;
+    margin-left: 20px; /* Add some space between the prompt and form containers */
+    flex-direction: column;
+    width: calc(40% - 25px); /* Full width minus padding */
+    background-color: #eff9f5;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border: 1px solid #ddd; /* Optional: Add a light border for better definition */
+    z-index: 1000;
+    align-items: flex-start; /* Align items to the start of the container */
+  }
+  
+  /* white background for the form */
+  #initial-report-form,
+  #second-report-form,
+  #third-report-form {
+    display: none; /* Hide initially */
+    flex-direction: column;
+    width: calc(100% - 25px); /* Full width minus padding */
+    background: white;
+    border-radius: 8px;
+    animation: popIn 0.5s ease; /* Smooth pop-in transition */
+    align-items: flex-start; /* Align children to the left */
+  }
+  
+  #initial-report-form.active,
+  #second-report-form.active,
+  #third-report-form.active {
+    text-align: left;
+    display: flex; 
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #ddd; 
+    width: 100%;
+  }
+  
+  /* Styles the box with the questions */
+  #initial-input-label,
+  #second-input-label,
+  #second-input-label-1,
+  #third-input-label {
+    text-align: left;
+    display: block; /* Show when active */
+    margin: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    width: 100%;
+  }
+  
+  /* Styles the box where users enter their responses */
+  #initial-input-desc,
+  #second-input-desc,
+  #second-input-desc-1,
+  #third-input-desc {
+    text-align: left; /* Ensure text is left-aligned */
+    display: flex; /* Show when active */
+    margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    width: 100%;
+  }
+  
+  /* Styles the submit button for all three questions */
+  #initial-submit-button,
+  #second-submit-button,
+  #third-submit-button {
+    text-align: left; /* Ensure text is left-aligned */
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    align-self: flex-end; 
+    margin: 10px;
+  }
+  
+  #show-second-report-form,
+  #show-third-report-form,
+  #report-button {
+    display: none;
+    margin-top: auto;
+    align-self: flex-end; 
+  }
+  
+  #show-second-report-form.active,
+  #show-third-report-form.active,
+  #report-button.active {
+    text-align: left;
+    display: flex;
+    margin-top: auto;
+    align-self: flex-end; 
+    border-radius: 8px;
+    border: 1px solid #ddd; /* Optional: Add a light border for better definition */
+  }
+  
+  /* New wrapper for the input and questions blocks */
+  #input-and-questions-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }

@@ -1,0 +1,241 @@
+/* ------------------ */
+/* Model Output Style */
+/* ------------------ */
+
+/* Image preloader to prevent visible delay */
+#image-preloader, #early-image-preloader {
+    position: absolute;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    z-index: -1;
+    visibility: hidden;
+}
+
+#image-preloader img, #early-image-preloader img {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0.01;
+    will-change: transform;
+}
+
+/* Will-change hints for better performance on image elements */
+.model-box img, .model-placeholder-image {
+    will-change: transform;
+}
+
+/* Flex container for ALL model outputs */
+#model-container {
+    display: none;
+    flex-wrap: wrap;
+    margin: 25px;
+    padding: 25px;
+    width: calc(100% - 50px); /* Full width minus padding */
+    height: calc(100%); /* Full height minus padding */
+    background-color: #eff9f5;
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Ensures the fixed model also has rounded borders and shadow */
+.fixed-model {
+    max-width: 25%; /* Max width 25% */
+    flex: 1 1 calc(25% - 50px); /* Flex basis 25% minus padding */
+    border: 2px solid red; /* Red border for the fixed model */
+    margin: 10px; /* Margin around each model */
+    border-radius: 15px; /* Rounds the corners of the fixed model */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a light shadow */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
+}
+
+/* Hover effect for the fixed model */
+.fixed-model:hover {
+    transform: scale(1.02); /* Slightly enlarges the container on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow for depth */
+}
+
+/* Style for the remaining models */
+.model {
+    max-width: 25%; /* Max width 25% */
+    flex: 1 1 calc(25% - 50px); /* Flex basis 25% minus padding */
+    border: 2px solid black; /* Black border for other models */
+    margin: 10px; /* Margin around each model */
+}
+
+/* Ensures that the results container uses flexbox to layout child elements horizontally */
+#comparison-results {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap onto the next line if not enough space */
+    justify-content: flex-start; /* Aligns items to the start of the container */
+    align-items: flex-start; /* Aligns items vertically to the top */
+}
+
+/* Styles for individual result containers */
+#comparison-results .result {
+    background-color: white; /* White background for result containers */
+    flex: 1 1 calc(25% - 50px); /* Flex basis 25% minus padding */
+    margin: 10px; /* Adds margin around each result for spacing */
+    text-align: center; /* Centers the text inside each result div */
+    border: 2px solid rgb(165, 165, 165); /* Border to visualize the bounding box */
+    border-radius: 15px; /* Rounds the corners of the result containers */
+    padding: 10px; /* Makes clickable area larger */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a light shadow */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
+}
+
+/* Hover effect for result containers */
+#comparison-results .result:hover {
+    transform: scale(1.02); /* Slightly enlarges the container on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow for depth */
+}
+
+/* Styles for the highlighted result */
+#comparison-results .result.highlighted {
+    background-color: #eff9f5; /* Light green background for highlighted results */
+    border-color: green; /* Change border color for highlighted results */
+}
+
+/* Styles for images to make them smaller, maintain aspect ratio, and rounded */
+#comparison-results .result img {
+    width: calc(48% - 2px - 2*1px); /* Adjusts width to account for margin; assumes 1px margin */
+    height: auto; /* Maintains the aspect ratio of the image */
+    margin: 3px; /* Adds space around the image */
+    border-radius: 10px; /* Rounds the corners of the images */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
+    border: 2px solid black;
+}
+
+/* Hover effect for images */
+#comparison-results .result img:hover {
+    transform: scale(1.02); /* Slightly enlarges the image on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+}
+
+
+
+/* HOW MANY MODELS TO DISPLAY PER ROW / HOW THEY LOOK */
+.model-box {
+    width: 60px; /* Adjust to your desired size */
+    height: 60px; /* Adjust to your desired size */
+    margin: 8px; /* Space between boxes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid grey;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+    flex: 1 0 calc(10% - 20px); /* Allows for 10 boxes per row */
+    background-color: #f2f1f1; /* Light background color */
+    overflow: hidden; /* Ensures content stays within the box */
+}
+
+.model-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Ensures the image fills the entire box */
+    border-radius: 5px;
+}
+
+/* Hover effect */
+.model-box:hover {
+    border-color: darkgrey;
+    transform: scale(1.05); /* Slightly enlarges the box on hover */
+}
+
+/* Selected state with green border */
+.model-box.selected {
+    border: 4px solid green; /* Increase border thickness */
+    background-color: #b9ecd5;
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6); /* Add a glowing green effect */
+    transform: scale(1.07); /* Slightly enlarge for emphasis */
+}
+
+/* Disable state */
+.model-box.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* Hidden text that appears on hover */
+.model-box-name {
+    visibility: hidden;
+    font-size: 12px; /* Slightly reduced font size */
+    color: #333;
+    position: absolute;
+    bottom: -20px;
+}
+
+.model-box:hover .model-box-name {
+    visibility: visible;
+}
+
+
+/* CSS for when the user hovers over a Model during model selection phase */
+/* Default style for #model-info */
+#model-info {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
+    transition: width 0.3s ease-in-out; /* Smooth transition for width */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+}
+
+#model-images {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.model-placeholder-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    object-fit: cover;
+}
+
+/* STYLE FOR THE INFORMATION BUTTON WHEN YOU HOVER OVER A MODEL*/
+.info-icon {
+    position: absolute;
+    top: 10px;  /* Adjust for top-right */
+    right: 10px; /* Adjust for top-right */
+    width: 24px;
+    height: 24px;
+    text-decoration: none; /* Remove underline */
+    font-size: 20px;
+    font-weight: bold;
+    color: inherit; /* Use the default text color */
+    text-align: center;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    border: none;
+}
+
+.info-icon:hover {
+    background-color: #e0e0e0;
+    text-decoration: none; /* Ensure underline doesn't appear on hover */
+    color: inherit; /* Keep default text color */
+}
+
+.info-icon:visited, 
+.info-icon:active, 
+.info-icon:link {
+    text-decoration: none;
+    color: inherit; /* Removes the hyperlink color */
+}
