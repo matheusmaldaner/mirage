@@ -485,6 +485,11 @@ function generateModelSelection() {
         img.src = model.teaser || 'images/onboarding-default-mirage-1.png';
         img.alt = model.name;
         img.classList.add("model-box-image");
+        // fallback for stale replicate.delivery URLs (their cdn expires teasers)
+        img.onerror = function() {
+            this.onerror = null;
+            this.src = 'images/onboarding-default-mirage-1.png';
+        };
 
         // Create paragraph for model name
         const name = document.createElement("p");

@@ -15,6 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
     generateButton.disabled = true;
     generateButton.style.backgroundColor = 'grey';
 
+    // model selection is visible by default, so the toggle button should reflect that
+    const wrapper = document.getElementById('model-selection-wrapper');
+    const toggleButton = document.getElementById('toggle-models-button');
+    if (wrapper && toggleButton) {
+        const isHidden = wrapper.style.display === 'none';
+        toggleButton.innerHTML = isHidden
+            ? '<i class="fas fa-layer-group me-2"></i>Show Models'
+            : '<i class="fas fa-layer-group me-2"></i>Hide Models';
+    }
+
     hideLoadingAnimation();
 
     // model boxes are rendered by constants.js generateModelSelection on DOMContentLoaded
@@ -68,10 +78,10 @@ window.toggleModels = function() {
     const toggleButton = document.getElementById('toggle-models-button');
     if (wrapper.style.display === 'none') {
         wrapper.style.display = '';
-        toggleButton.textContent = 'Hide Models';
+        toggleButton.innerHTML = '<i class="fas fa-layer-group me-2"></i>Hide Models';
     } else {
         wrapper.style.display = 'none';
-        toggleButton.textContent = 'Show Models';
+        toggleButton.innerHTML = '<i class="fas fa-layer-group me-2"></i>Show Models';
     }
 };
 
