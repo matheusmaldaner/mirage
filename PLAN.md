@@ -159,4 +159,4 @@ mirage/
 - Cloudflare Pages Functions docs: https://developers.cloudflare.com/pages/functions/
 - Replicate HTTP API: https://replicate.com/docs/reference/http
 - CI'25 demo paper: https://arxiv.org/abs/2511.21547
-- HCOMP'24 WIP: https://www.humancomputation.com/assets/wip_2024/HCOMP_24_WIP_4.pdf
+- HCOMP'24 WIP: https://arxiv.org/abs/2503.19252
