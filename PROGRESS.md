@@ -7,10 +7,10 @@
 ## Current Status
 
 - **Project**: MIRAGE Standalone
-- **Phase**: Phase 0 - skeleton
-- **Current Task**: writing project files
+- **Phase**: Phase 4 - polish
+- **Current Task**: awaiting Cloudflare Pages connect (manual step in CF dashboard)
 - **Last Updated**: 2026-05-29
-- **Tests Passing**: n/a (no tests yet)
+- **Tests Passing**: local wrangler smoke test PASS (static + function wiring verified)
 
 ---
 
@@ -28,39 +28,43 @@
 - [x] Project tree
 - [x] PLAN.md
 - [x] PROGRESS.md
-- [ ] README.md
-- [ ] LICENSE
-- [ ] .env.example
-- [ ] .gitignore
-- [ ] Port model catalog
+- [x] README.md
+- [x] LICENSE (MIT)
+- [x] .env.example
+- [x] .gitignore
+- [x] Port model catalog (js/constants.js verbatim from old)
 
 ### Phase 1: Static port
-- [ ] CSS copied
-- [ ] Images copied
-- [ ] base.html ported
-- [ ] landing_page.html ported
-- [ ] instructions_english.html ported
-- [ ] compare_models_english.html ported
-- [ ] Auth UI stripped
-- [ ] Forum links stripped
+- [x] CSS copied (header, compare_models, models_display, report_form, scss/bootstrapmods)
+- [x] Images copied (favicon, flags, gifs, onboarding, model-teasers)
+- [x] Collapsed base.html + compare_models_english.html into single index.html (no Django blocks needed)
+- [x] Auth UI stripped (no register/login)
+- [x] Forum links stripped (no forum.weaudit.org references)
+- [x] Removed multi-step report forms (Discourse-bound)
 
 ### Phase 2: Pages Function
-- [ ] generate.ts wiring
-- [ ] Replicate sync call
-- [ ] Rate limit
-- [ ] Response shape matching existing JS
+- [x] functions/api/generate.js wiring
+- [x] Replicate sync call via Prefer: wait, fallback poll
+- [x] Optional KV-based per-IP rate limit
+- [x] Response shape matching existing JS (`Status: Completed`, `ImageUrls: [...]`)
 
 ### Phase 3: Rewire frontend
-- [ ] API URLs swapped
-- [ ] Multi-call pattern collapsed
-- [ ] submit_session_data removed
-- [ ] taigacreatepost removed
+- [x] API URLs swapped (single POST /api/generate per model)
+- [x] Collapsed multi-call init+poll pattern into one synchronous fetch
+- [x] submit_session_data removed
+- [x] taigacreatepost removed
+- [x] get-images removed (Replicate URLs go direct to browser)
 
 ### Phase 4: Polish
-- [ ] README deploy steps
-- [ ] First successful end-to-end generation
-- [ ] Pushed to GitHub (matheusmaldaner/mirage)
+- [x] README.md with deploy steps
+- [x] DEPLOY.md with detailed Cloudflare Pages walkthrough
+- [x] Pushed to GitHub (matheusmaldaner/mirage, private, main branch, correctly attributed)
+- [x] Local end-to-end smoke test passed via `wrangler pages dev`
+- [ ] Cloudflare Pages project connected (manual step)
+- [ ] Replicate token added as env var
 - [ ] mirage.matheus.wiki DNS pointed
+- [ ] First production generation
+- [ ] Repo flipped to public (when ready)
 
 ---
 
