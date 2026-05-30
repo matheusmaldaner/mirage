@@ -9,6 +9,41 @@ const REPLICATE_URL = 'https://api.replicate.com/v1/predictions';
 const MAX_POLL_ATTEMPTS = 30;
 const POLL_INTERVAL_MS = 2000;
 
+// per-model parameter overrides ported from the old django mirageFunction.py
+// these win over whatever the client sends so the call actually validates at replicate
+const MODEL_OVERRIDES = {
+  'bytedance/sdxl-lightning-4step': {
+    width: 1024, height: 1024, scheduler: 'K_EULER',
+    guidance_scale: 0, negative_prompt: 'worst quality, low quality',
+    num_inference_steps: 4, max_outputs: 1,
+  },
+  'ai-forever/kandinsky-2.2': {
+    width: 1024, height: 1024, scheduler: 'K_EULER',
+    guidance_scale: 0, negative_prompt: 'worst quality, low quality',
+    num_inference_steps: 20,
+  },
+  'playgroundai/playground-v2-1024px-aesthetic': {
+    width: 1024, height: 1024, scheduler: 'K_EULER_ANCESTRAL',
+    guidance_scale: 3, negative_prompt: 'worst quality, low quality',
+    num_inference_steps: 50, max_outputs: 1,
+  },
+  'lucataco/ssd-1b': {
+    width: 768, height: 768, scheduler: 'K_EULER',
+    guidance_scale: 9, negative_prompt: 'worst quality, low quality',
+    num_inference_steps: 20,
+  },
+  'adirik/realvisxl-v4.0': {
+    width: 768, height: 768, scheduler: 'K_EULER',
+    guidance_scale: 4, negative_prompt: 'worst quality, low quality',
+    num_inference_steps: 25,
+  },
+  'fofr/latent-consistency-model': {
+    width: 768, height: 768, scheduler: 'K_EULER',
+    guidance_scale: 4, negative_prompt: 'worst quality, low quality',
+    num_inference_steps: 25, max_outputs: 1, num_key: 'num_images',
+  },
+};
+
 export async function onRequestPost({ request, env }) {
   if (!env.REPLICATE_API_TOKEN) {
     return jsonResponse({ error: 'server missing REPLICATE_API_TOKEN' }, 500);
@@ -27,23 +62,28 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse({ error: 'invalid json body' }, 400);
   }
 
-  const { model_name, model_version_id, prompt, num, width, height, scheduler, guidance_scale, num_inference_steps, negative_prompt } = body || {};
+  const { model_name, model_version_id, prompt, num } = body || {};
 
   if (!model_name || !prompt) {
     return jsonResponse({ error: 'model_name and prompt are required' }, 400);
   }
 
-  const numImages = Math.max(1, Math.min(parseInt(num, 10) || 1, 8));
+  // apply model-specific overrides if known, else default params
+  const ov = MODEL_OVERRIDES[model_name] || {};
+  const requested = Math.max(1, Math.min(parseInt(num, 10) || 1, 8));
+  const maxOut = ov.max_outputs || 8;
+  const numImages = Math.min(requested, maxOut);
+  const numKey = ov.num_key || 'num_outputs';
 
   const input = {
     prompt,
-    width: parseInt(width, 10) || 768,
-    height: parseInt(height, 10) || 768,
-    scheduler: scheduler || 'K_EULER',
-    guidance_scale: parseFloat(guidance_scale) || 7.5,
-    num_inference_steps: parseInt(num_inference_steps, 10) || 20,
-    negative_prompt: negative_prompt || '',
-    num_outputs: numImages,
+    width: ov.width || 768,
+    height: ov.height || 768,
+    scheduler: ov.scheduler || 'K_EULER',
+    guidance_scale: ov.guidance_scale ?? 7.5,
+    num_inference_steps: ov.num_inference_steps || 20,
+    negative_prompt: ov.negative_prompt || '',
+    [numKey]: numImages,
   };
 
   // create the prediction with prefer: wait so replicate holds the connection until it's done
