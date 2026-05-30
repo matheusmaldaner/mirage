@@ -7,6 +7,12 @@ const MAX_MODELS = 4;
 // endpoint served by functions/api/generate.js when deployed to cloudflare pages
 const API_ENDPOINT = '/api/generate';
 
+// labels respect the page's lang attribute
+const IS_PT = document.documentElement.lang.startsWith('pt');
+const L = IS_PT
+    ? { show: 'Mostrar Modelos', hide: 'Esconder Modelos', noPrompt: 'Digite um prompt primeiro.', noModel: 'Selecione pelo menos um modelo.', noImages: 'Nenhuma imagem retornada.', genFailed: 'Geração falhou: ', rate: (lim, mins) => lim ? `Limite de uso atingido (${lim} gerações/hora). Tente novamente em ${mins} min.` : 'Limite de uso atingido. Tente novamente em breve.', rateBare: 'Limite atingido. Tente novamente mais tarde.' }
+    : { show: 'Show Models', hide: 'Hide Models', noPrompt: 'Enter a prompt first.', noModel: 'Select at least one model.', noImages: 'No images returned.', genFailed: 'Generation failed: ', rate: (lim, mins) => lim ? `Rate limit hit (${lim} generations/hour). Try again in ${mins} min.` : 'Rate limit hit. Try again later.', rateBare: 'Rate limit hit. Try again later.' };
+
 let selectedModels = new Set();
 let modelSelectionEnabled = true;
 
@@ -20,9 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('toggle-models-button');
     if (wrapper && toggleButton) {
         const isHidden = wrapper.style.display === 'none';
-        toggleButton.innerHTML = isHidden
-            ? '<i class="fas fa-layer-group me-2"></i>Show Models'
-            : '<i class="fas fa-layer-group me-2"></i>Hide Models';
+        toggleButton.innerHTML = `<i class="fas fa-layer-group me-2"></i>${isHidden ? L.show : L.hide}`;
     }
 
     hideLoadingAnimation();
@@ -78,21 +82,21 @@ window.toggleModels = function() {
     const toggleButton = document.getElementById('toggle-models-button');
     if (wrapper.style.display === 'none') {
         wrapper.style.display = '';
-        toggleButton.innerHTML = '<i class="fas fa-layer-group me-2"></i>Hide Models';
+        toggleButton.innerHTML = `<i class="fas fa-layer-group me-2"></i>${L.hide}`;
     } else {
         wrapper.style.display = 'none';
-        toggleButton.innerHTML = '<i class="fas fa-layer-group me-2"></i>Show Models';
+        toggleButton.innerHTML = `<i class="fas fa-layer-group me-2"></i>${L.show}`;
     }
 };
 
 window.generateModels = async function() {
     const prompt = document.getElementById('prompt-input').value.trim();
     if (!prompt) {
-        alert('Enter a prompt first.');
+        alert(L.noPrompt);
         return;
     }
     if (selectedModels.size === 0) {
-        alert('Select at least one model.');
+        alert(L.noModel);
         return;
     }
 
@@ -159,7 +163,7 @@ function displayResult(modelName, images, order) {
         });
         result.innerHTML = content;
     } else {
-        result.innerHTML = `<h5>${escapeHtml(modelName)}</h5><p>No images returned.</p>`;
+        result.innerHTML = `<h5>${escapeHtml(modelName)}</h5><p>${L.noImages}</p>`;
     }
 
     resultsContainer.appendChild(result);
@@ -180,7 +184,7 @@ function displayError(modelName, err, order) {
     const resultsContainer = document.getElementById('comparison-results');
     const result = document.createElement('div');
     result.className = 'result model error';
-    result.innerHTML = `<h5>${escapeHtml(modelName)}</h5><p style="color: #b00;">Generation failed: ${escapeHtml(String(err.message || err))}</p>`;
+    result.innerHTML = `<h5>${escapeHtml(modelName)}</h5><p style="color: #b00;">${L.genFailed}${escapeHtml(String(err.message || err))}</p>`;
     resultsContainer.appendChild(result);
 }
 
@@ -199,9 +203,7 @@ function showRateBanner(limit, retrySeconds) {
     const msg = document.getElementById('rate-limit-message');
     if (!banner || !msg) return;
     const mins = retrySeconds ? Math.ceil(retrySeconds / 60) : null;
-    msg.textContent = limit
-        ? `Rate limit hit (${limit} generations/hour). Try again in ${mins} min.`
-        : 'Rate limit hit. Try again later.';
+    msg.textContent = limit ? L.rate(limit, mins) : L.rateBare;
     banner.classList.add('visible');
 }
 

@@ -3,27 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MIRAGE</title>
+    <meta name="description" content="MIRAGE - Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI">
+    <title>MIRAGE - Compare Text-To-Image Models</title>
 
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="css/header.css">
-    <link rel="stylesheet" type="text/css" href="css/compare_models.css">
-    <link rel="stylesheet" type="text/css" href="css/models_display.css">
-    <link rel="stylesheet" type="text/css" href="css/scss/bootstrapmods.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-            crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/gh/hoomanbahreini/bootstrap-half-and-quarter-grid/fractional-grid.min.css"
-          rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -36,157 +25,267 @@
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
-        body { font-family: 'Montserrat', sans-serif; color: var(--text-color); }
-        #prompt-submission-container,
-        #model-container {
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border: none;
-            padding: 1.5rem;
-            margin: 1.5rem;
-            transition: var(--transition);
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            overflow-x: hidden;
         }
-        .model-box {
-            transition: var(--transition);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
+        .landing-container {
+            max-width: 1120px;
+            width: 100%;
+            padding: 2rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
         }
-        .model-box.selected {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 10px rgba(16, 114, 79, 0.5);
+        .logo-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            letter-spacing: 2px;
         }
-        .btn-success {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transition: var(--transition);
-            border-radius: var(--border-radius);
+        .logo-subtitle {
+            font-size: 1rem;
+            color: var(--light-text);
+            margin-top: 0.5rem;
+            max-width: 600px;
+            text-align: center;
+        }
+        .logo-acronym {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            letter-spacing: 1px;
             font-weight: 500;
         }
-        .btn-success:hover {
-            background-color: #0d5f42;
-            border-color: #0d5f42;
-            transform: translateY(-2px);
+        .features-container {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0.5rem 0;
         }
-        .form-control {
-            border-radius: var(--border-radius);
-            border: 1px solid #dee2e6;
-            padding: 0.75rem 1rem;
-            transition: var(--transition);
-        }
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(16, 114, 79, 0.25);
-        }
-        #comparison-results .result {
+        .feature-card {
             background-color: white;
+            padding: 1.25rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            border: 1px solid #dee2e6;
-            padding: 1rem;
+            width: 240px;
+            text-align: center;
             transition: var(--transition);
         }
-        #comparison-results .result:hover {
+        .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
         }
-        #comparison-results .result.highlighted {
-            background-color: #f7fcfa;
-            border-color: var(--primary-color);
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
         }
-        .loading-overlay { background: rgba(255, 255, 255, 0.9); }
-        .loader { border-top-color: var(--primary-color); }
-        .rate-limit-banner {
-            display: none;
-            background-color: #fff3cd;
-            color: #664d03;
-            border: 1px solid #ffecb5;
+        .feature-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+        }
+        .feature-description {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .language-prompt {
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin: 0.5rem 0 0.75rem 0;
+        }
+        .language-selection {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .flag-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: white;
             border-radius: var(--border-radius);
-            padding: 0.75rem 1rem;
-            margin: 1rem 1.5rem;
-            font-size: 0.95rem;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--text-color);
+            transition: var(--transition);
+            width: 140px;
         }
-        .rate-limit-banner.visible { display: block; }
+        .flag-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+            color: var(--primary-color);
+        }
+        .flag {
+            width: 64px;
+            height: 40px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+        .flag-us { background-image: url('images/flag-us.png'); }
+        .flag-br { background-image: url('images/flag-br.png'); }
+        .flag-label {
+            font-weight: 600;
+        }
+        .papers-section {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .section-title {
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .citation-encouragement {
+            text-align: center;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .papers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 1rem;
+        }
+        .paper-card {
+            background: white;
+            padding: 1.25rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        .paper-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .paper-authors, .paper-venue, .paper-description {
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin-bottom: 0.4rem;
+        }
+        .paper-venue { font-style: italic; }
+        .paper-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .paper-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border: 1px solid var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .paper-button.secondary {
+            background: transparent;
+            color: var(--primary-color);
+        }
+        .paper-button:hover { opacity: 0.85; }
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--light-text);
+            font-size: 0.85rem;
+        }
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
     </style>
 </head>
-
 <body>
-    <div class="container-fluid" id="header">
-        <div class="row align-items-center" style="padding-top: 1%;">
-            <div class="col-12 col-md-2 d-flex" style="padding-left: 30px;">
-                <p id="logo-WeAudit" onclick="window.location.href='/'"> Mirage </p>
+    <div class="landing-container">
+        <div class="logo-container animate__animated animate__fadeInDown">
+            <h1 class="logo-title">MIRAGE</h1>
+            <p class="logo-subtitle">Compare Text-To-Image Models Side by Side</p>
+            <p class="logo-acronym">Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI</p>
+        </div>
+
+        <div class="features-container animate__animated animate__fadeInUp">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-images"></i></div>
+                <h3 class="feature-title">Compare Models</h3>
+                <p class="feature-description">Generate images from multiple AI models at once and compare their outputs side by side.</p>
             </div>
-            <div class="col-12 col-md-10 d-flex justify-content-end align-items-center flex-wrap" style="padding-right: 30px;">
-                <a href="https://github.com/matheusmaldaner/mirage" target="_blank"
-                   style="color: var(--primary-color); text-decoration: none; margin-right: 1rem; font-weight: 500;">
-                    <i class="fab fa-github"></i> Source
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-search"></i></div>
+                <h3 class="feature-title">Detect Patterns</h3>
+                <p class="feature-description">Identify patterns, biases, and inconsistencies across different text-to-image models.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-code-branch"></i></div>
+                <h3 class="feature-title">Open Source</h3>
+                <p class="feature-description">Fork the repo, drop in a Replicate token, deploy your own MIRAGE instance.</p>
+            </div>
+        </div>
+
+        <div class="actions-container animate__animated animate__fadeIn animate__delay-1s">
+            <h3 class="language-prompt">Select a Language to Start</h3>
+            <div class="language-selection">
+                <a href="instructions.html" class="flag-button">
+                    <div class="flag flag-us"></div>
+                    <span class="flag-label">English</span>
                 </a>
-                <a href="https://arxiv.org/abs/2511.21547" target="_blank"
-                   style="color: var(--primary-color); text-decoration: none; font-weight: 500;">
-                    <i class="fas fa-file-pdf"></i> Paper
+                <a href="instructions-pt.html" class="flag-button">
+                    <div class="flag flag-br"></div>
+                    <span class="flag-label">Português</span>
                 </a>
             </div>
         </div>
-    </div>
 
-    <div id="rate-limit-banner" class="rate-limit-banner">
-        <i class="fas fa-info-circle"></i>
-        <span id="rate-limit-message"></span>
-    </div>
-
-    <div id="input-and-questions-wrapper">
-        <div id="image-preloader" style="display:none; visibility:hidden; height:0; width:0; overflow:hidden;"></div>
-
-        <div id="prompt-submission-container">
-            <h5 class="mb-4" style="color: var(--primary-color); font-weight: 600;">Image Generator</h5>
-
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Enter your prompt here" id="prompt-input">
-                <button class="btn btn-success" id="generate-button" onclick="generateModels()">
-                    <i class="fas fa-magic me-2"></i>Generate
-                </button>
-            </div>
-
-            <div id="model-selection-wrapper">
-                <h6 class="mt-4 mb-3" style="color: var(--primary-color); font-weight: 500;">Select up to 4 models</h6>
-                <div id="model-selection-container" class="d-flex flex-wrap mb-3"></div>
-            </div>
-
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-success" id="toggle-models-button" onclick="toggleModels()">
-                    <i class="fas fa-layer-group me-2"></i>Show Models
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="model-container">
-        <h5 class="mb-4" style="color: var(--primary-color); font-weight: 600;">Generation Results</h5>
-        <div class="flex-box rounded-borders" id="comparison-results"></div>
-    </div>
-
-    <div id="image-modal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: var(--primary-color); color: white;">
-                    <h5 class="modal-title">Image Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                            style="background-color: white;"></button>
+        <div class="papers-section animate__animated animate__fadeIn animate__delay-1s">
+            <h3 class="section-title">Research Papers</h3>
+            <p class="citation-encouragement">Consider citing both papers if you use MIRAGE in your research</p>
+            <div class="papers-container">
+                <div class="paper-card">
+                    <h4 class="paper-title">Seeing Twice: How Side-by-Side T2I Comparison Changes Auditing Strategies</h4>
+                    <p class="paper-authors">Matheus Kunzler Maldaner, Wesley Hanwen Deng, Jason I. Hong, Ken Holstein, Motahhare Eslami</p>
+                    <p class="paper-venue">ACM Collective Intelligence 2025</p>
+                    <p class="paper-description">Demonstrates how side-by-side comparison interfaces change user auditing strategies, revealing model personalities and bias patterns in text-to-image AI systems.</p>
+                    <div class="paper-actions">
+                        <a href="https://arxiv.org/abs/2511.21547" target="_blank" class="paper-button"><i class="fas fa-file-pdf"></i>Read Paper</a>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <img class="modal-content" id="pop-up-image" style="width: 100%; height: auto;">
+                <div class="paper-card">
+                    <h4 class="paper-title">MIRAGE: Multi-model Interface for Reviewing and Auditing Generative T2I AI</h4>
+                    <p class="paper-authors">Matheus Kunzler Maldaner, Wesley Hanwen Deng, Jason I. Hong, Ken Holstein, Motahhare Eslami</p>
+                    <p class="paper-venue">AAAI Conference on Human Computation and Crowdsourcing 2024</p>
+                    <p class="paper-description">Introduces the MIRAGE system architecture and methodology for comparative analysis of multiple text-to-image models in a unified interface.</p>
+                    <div class="paper-actions">
+                        <a href="https://www.humancomputation.com/assets/wip_2024/HCOMP_24_WIP_4.pdf" target="_blank" class="paper-button"><i class="fas fa-file-pdf"></i>Read Paper</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="loading-animation" class="loading-overlay hidden">
-        <div class="loader"></div>
-        <p style="margin-top: 20px; font-weight: 500; color: var(--primary-color);">Generating Images...</p>
+        <div class="footer">
+            <p>Open source on <a href="https://github.com/matheusmaldaner/mirage" target="_blank">GitHub</a> | MIT License</p>
+        </div>
     </div>
-
-    <script type="module" src="js/constants.js"></script>
-    <script type="module" src="js/compare.js"></script>
 </body>
 </html>
