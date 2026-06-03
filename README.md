@@ -29,6 +29,10 @@ No accounts, no database, no forum. The browser is the only state.
 5. Optional: in Pages project settings > Functions > KV namespace bindings, bind a KV namespace as `RATE_LIMIT_KV`. If you skip this step rate limiting is off and every request goes straight to Replicate.
 6. Save and deploy. The first deploy gives you a `*.pages.dev` URL. Point a custom domain at it under Pages > Custom domains.
 
+## Cost and abuse warning
+
+`REPLICATE_API_TOKEN` is your token, and every generation spends your Replicate credits. The optional per-IP rate limit (`RATE_LIMIT_KV` + `RATE_LIMIT_PER_HOUR`) is a soft cap only: it is trivially bypassed with proxies or VPNs, and because the function allows cross-origin calls (`Access-Control-Allow-Origin: *` in `functions/api/generate.js`) any website can call your `/api/generate`. If cost matters, set a low `RATE_LIMIT_PER_HOUR`, add a global daily cap or a kill switch, and watch your Replicate billing.
+
 ## Local dev
 
 ```
