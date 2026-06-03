@@ -1,4 +1,5 @@
 import { MODELS } from './constants.js';
+import { PORTUGUESE_DESCRIPTIONS } from './translations_pt.js';
 
 // number of images to request per model
 const NUM_IMAGES = 8;
@@ -10,11 +11,12 @@ const API_ENDPOINT = '/api/generate';
 // labels respect the page's lang attribute
 const IS_PT = document.documentElement.lang.startsWith('pt');
 const L = IS_PT
-    ? { show: 'Mostrar Modelos', hide: 'Esconder Modelos', noPrompt: 'Digite um prompt primeiro.', noModel: 'Selecione pelo menos um modelo.', noImages: 'Nenhuma imagem retornada.', genFailed: 'Geração falhou: ', rate: (lim, mins) => lim ? `Limite de uso atingido (${lim} gerações/hora). Tente novamente em ${mins} min.` : 'Limite de uso atingido. Tente novamente em breve.', rateBare: 'Limite atingido. Tente novamente mais tarde.' }
-    : { show: 'Show Models', hide: 'Hide Models', noPrompt: 'Enter a prompt first.', noModel: 'Select at least one model.', noImages: 'No images returned.', genFailed: 'Generation failed: ', rate: (lim, mins) => lim ? `Rate limit hit (${lim} generations/hour). Try again in ${mins} min.` : 'Rate limit hit. Try again later.', rateBare: 'Rate limit hit. Try again later.' };
+    ? { show: 'Mostrar Modelos', hide: 'Esconder Modelos', noPrompt: 'Digite um prompt primeiro.', noModel: 'Selecione pelo menos um modelo.', noImages: 'Nenhuma imagem retornada.', genFailed: 'Geração falhou: ', tooMany: max => `Você pode selecionar até ${max} modelos.`, alt: (model, n) => `Imagem gerada por ${model}, imagem ${n}`, rate: (lim, mins) => lim ? `Limite de uso atingido (${lim} gerações/hora). Tente novamente em ${mins} min.` : 'Limite de uso atingido. Tente novamente em breve.', rateBare: 'Limite atingido. Tente novamente mais tarde.' }
+    : { show: 'Show Models', hide: 'Hide Models', noPrompt: 'Enter a prompt first.', noModel: 'Select at least one model.', noImages: 'No images returned.', genFailed: 'Generation failed: ', tooMany: max => `You can only select up to ${max} models.`, alt: (model, n) => `Generated output for ${model}, Image ${n}`, rate: (lim, mins) => lim ? `Rate limit hit (${lim} generations/hour). Try again in ${mins} min.` : 'Rate limit hit. Try again later.', rateBare: 'Rate limit hit. Try again later.' };
 
 let selectedModels = new Set();
 let modelSelectionEnabled = true;
+let waitForAllModels = true;
 
 document.addEventListener('DOMContentLoaded', () => {
     const generateButton = document.getElementById('generate-button');
@@ -29,7 +31,30 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleButton.innerHTML = `<i class="fas fa-layer-group me-2"></i>${isHidden ? L.show : L.hide}`;
     }
 
+    const promptInput = document.getElementById('prompt-input');
+    if (promptInput) {
+        promptInput.addEventListener('input', updateGenerateButtonState);
+        promptInput.addEventListener('keydown', event => {
+            if (event.key === 'Enter' && !generateButton.disabled) {
+                event.preventDefault();
+                window.generateModels();
+            }
+        });
+    }
+
+    const waitCheckbox = document.getElementById('waitForAllModelsCheckbox');
+    if (waitCheckbox) {
+        waitForAllModels = waitCheckbox.checked;
+        waitCheckbox.addEventListener('change', () => {
+            waitForAllModels = waitCheckbox.checked;
+        });
+    }
+
+    const formContainer = document.getElementById('form-container');
+    if (formContainer) formContainer.style.display = 'flex';
+
     hideLoadingAnimation();
+    showTutorialIfNeeded();
 
     // model boxes are rendered by constants.js generateModelSelection on DOMContentLoaded
     // attach behavior on the next tick so the boxes already exist
@@ -56,19 +81,39 @@ function attachModelBoxHandlers() {
                 box.classList.remove('selected');
                 selectedModels.delete(modelKey);
             } else {
-                if (selectedModels.size >= MAX_MODELS) return;
+                if (selectedModels.size >= MAX_MODELS) {
+                    alert(L.tooMany(MAX_MODELS));
+                    return;
+                }
                 box.classList.add('selected');
                 selectedModels.add(modelKey);
+                updateModelHoverInfo(modelKey);
             }
 
             updateGenerateButtonState();
+        });
+
+        box.addEventListener('mouseenter', () => {
+            updateModelHoverInfo(box.getAttribute('data-model'));
+        });
+
+        box.addEventListener('mouseleave', () => {
+            const modelInfo = document.getElementById('model-info');
+            if (selectedModels.size > 0) {
+                const lastSelectedModelKey = Array.from(selectedModels).slice(-1)[0];
+                updateModelHoverInfo(lastSelectedModelKey);
+            } else if (modelInfo) {
+                modelInfo.style.display = 'none';
+            }
         });
     });
 }
 
 function updateGenerateButtonState() {
     const generateButton = document.getElementById('generate-button');
-    if (selectedModels.size > 0) {
+    const promptInput = document.getElementById('prompt-input');
+    const promptValue = promptInput ? promptInput.value.trim() : '';
+    if (selectedModels.size > 0 && promptValue !== '') {
         generateButton.disabled = false;
         generateButton.style.backgroundColor = '';
     } else {
@@ -80,14 +125,49 @@ function updateGenerateButtonState() {
 window.toggleModels = function() {
     const wrapper = document.getElementById('model-selection-wrapper');
     const toggleButton = document.getElementById('toggle-models-button');
+    const modelInfo = document.getElementById('model-info');
     if (wrapper.style.display === 'none') {
         wrapper.style.display = '';
         toggleButton.innerHTML = `<i class="fas fa-layer-group me-2"></i>${L.hide}`;
+        if (selectedModels.size > 0) {
+            const lastSelectedModelKey = Array.from(selectedModels).slice(-1)[0];
+            updateModelHoverInfo(lastSelectedModelKey);
+        }
     } else {
         wrapper.style.display = 'none';
         toggleButton.innerHTML = `<i class="fas fa-layer-group me-2"></i>${L.show}`;
+        if (modelInfo) modelInfo.style.display = 'none';
     }
 };
+
+function updateModelHoverInfo(modelKey) {
+    const model = MODELS[modelKey];
+    const modelInfo = document.getElementById('model-info');
+    const modelName = document.getElementById('model-name');
+    const modelDescription = document.getElementById('model-description');
+    const modelImage1 = document.getElementById('model-image-1');
+    const modelImage2 = document.getElementById('model-image-2');
+    const modelInfoLink = document.getElementById('model-info-link');
+
+    if (!model || !modelInfo || !modelName || !modelDescription || !modelImage1 || !modelImage2 || !modelInfoLink) {
+        return;
+    }
+
+    const description = IS_PT && PORTUGUESE_DESCRIPTIONS[modelKey]
+        ? PORTUGUESE_DESCRIPTIONS[modelKey]
+        : model.description;
+    const images = Array.isArray(model.images) ? model.images.filter(src => src && !src.includes('placeholder')) : [];
+
+    modelName.textContent = model.name;
+    modelDescription.textContent = description || '';
+    modelImage1.src = images[0] || model.teaser || 'images/onboarding-default-mirage-1.png';
+    modelImage2.src = images[1] || images[0] || model.teaser || 'images/onboarding-default-mirage-2.png';
+    modelImage1.onerror = () => { modelImage1.src = 'images/onboarding-default-mirage-1.png'; };
+    modelImage2.onerror = () => { modelImage2.src = 'images/onboarding-default-mirage-2.png'; };
+    modelInfoLink.href = model.link || '#';
+    modelInfoLink.style.display = 'flex';
+    modelInfo.style.display = 'flex';
+}
 
 window.generateModels = async function() {
     const prompt = document.getElementById('prompt-input').value.trim();
@@ -104,18 +184,43 @@ window.generateModels = async function() {
     document.getElementById('comparison-results').innerHTML = '';
     hideRateBanner();
     modelSelectionEnabled = false;
+    setGenerationUiDisabled(true);
     showLoadingAnimation();
 
-    const tasks = Array.from(selectedModels).map((modelKey, order) => {
+    const selectedEntries = Array.from(selectedModels);
+    const tasks = selectedEntries.map((modelKey, order) => {
         const model = MODELS[modelKey];
         return generateForModel(model, prompt, order)
-            .then(result => displayResult(model.name, result, order))
-            .catch(err => displayError(model.name, err, order));
+            .then(result => ({ model, result, order }))
+            .catch(err => ({ model, err, order }));
     });
 
-    await Promise.allSettled(tasks);
+    if (waitForAllModels) {
+        const results = await Promise.all(tasks);
+        results.forEach(item => {
+            if (item.err) {
+                displayError(item.model.name, item.err, item.order);
+            } else {
+                displayResult(item.model.name, item.result, item.order);
+            }
+        });
+    } else {
+        let firstDone = false;
+        await Promise.allSettled(tasks.map(task => task.then(item => {
+            if (!firstDone) {
+                hideLoadingAnimation();
+                firstDone = true;
+            }
+            if (item.err) {
+                displayError(item.model.name, item.err, item.order);
+            } else {
+                displayResult(item.model.name, item.result, item.order);
+            }
+        })));
+    }
 
     hideLoadingAnimation();
+    setGenerationUiDisabled(false);
     modelSelectionEnabled = true;
 };
 
@@ -159,7 +264,7 @@ function displayResult(modelName, images, order) {
     if (Array.isArray(images) && images.length > 0) {
         let content = `<h5>${escapeHtml(modelName)}</h5>`;
         images.forEach((image, index) => {
-            content += `<img src="${escapeAttr(image)}" alt="Generated output for ${escapeAttr(modelName)}, Image ${index + 1}" class="model-output-image" onError="this.style.display='none';" />`;
+            content += `<img src="${escapeAttr(image)}" alt="${escapeAttr(L.alt(modelName, index + 1))}" class="model-output-image" onError="this.style.display='none';" />`;
         });
         result.innerHTML = content;
     } else {
@@ -196,6 +301,24 @@ function showLoadingAnimation() {
 function hideLoadingAnimation() {
     const el = document.getElementById('loading-animation');
     if (el) el.classList.add('hidden');
+}
+
+function setGenerationUiDisabled(disabled) {
+    const promptInput = document.getElementById('prompt-input');
+    const generateButton = document.getElementById('generate-button');
+    if (promptInput) promptInput.disabled = disabled;
+    if (generateButton) generateButton.disabled = disabled;
+    document.querySelectorAll('.model-box').forEach(box => {
+        box.classList.toggle('disabled', disabled);
+    });
+    if (!disabled) updateGenerateButtonState();
+}
+
+function showTutorialIfNeeded() {
+    const modal = document.getElementById('tutorialModal');
+    if (!modal || localStorage.getItem('tutorialShown')) return;
+    new bootstrap.Modal(modal).show();
+    localStorage.setItem('tutorialShown', 'true');
 }
 
 function showRateBanner(limit, retrySeconds) {

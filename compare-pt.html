@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/compare_models.css">
     <link rel="stylesheet" type="text/css" href="css/models_display.css">
+    <link rel="stylesheet" type="text/css" href="css/report_form.css">
     <link rel="stylesheet" type="text/css" href="css/scss/bootstrapmods.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
@@ -25,6 +26,32 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+    <script>
+        (function() {
+            const preloader = document.createElement('div');
+            preloader.id = 'early-image-preloader';
+            preloader.style.position = 'absolute';
+            preloader.style.height = '0';
+            preloader.style.width = '0';
+            preloader.style.overflow = 'hidden';
+            preloader.style.zIndex = '-1';
+            document.head.appendChild(preloader);
+
+            [
+                'https://replicate.delivery/yhqm/VyD24fDyzM2nQSg0nQc58W2EIj16hGcWKrXJozjAMR1BeidTA/out-0.png',
+                'https://replicate.delivery/pbxt/cj5eFwQqZPwROSKox75sbAVEJvfs58GX2Tswlu5tYzWwdLKSA/out-0.png',
+                'https://replicate.delivery/pbxt/Lca3IEjcKoJBBVS6ajROkK37sDzPsmjYxIcFzxPZp65wZzTE/out-0.png',
+                'https://replicate.delivery/pbxt/aOZ4ywUeyeiyqEz5l7lixq0e5rAbs3qTStetOGXNKZd4g6QEB/out-0.png',
+                'https://replicate.delivery/pbxt/LF23xWrMie2vMCmbiswetET2BLperpEtNodZSN4yNfDkAClHB/out-0.jpg',
+                'https://replicate.delivery/pbxt/sWeZFZou6v3CPKuoJbqX46ugPaHT1DcsWYx0srPmGrMOCPYIA/out-0.png'
+            ].forEach(src => {
+                const img = new Image();
+                img.src = src;
+                preloader.appendChild(img);
+            });
+        })();
+    </script>
+
     <style>
         :root {
             --primary-color: #10724f;
@@ -38,6 +65,7 @@
         }
         body { font-family: 'Montserrat', sans-serif; color: var(--text-color); }
         #prompt-submission-container,
+        #form-container,
         #model-container {
             background-color: white;
             border-radius: var(--border-radius);
@@ -46,6 +74,50 @@
             padding: 1.5rem;
             margin: 1.5rem;
             transition: var(--transition);
+        }
+        #form-container {
+            display: flex;
+            flex-direction: column;
+            width: calc(40% - 25px);
+            min-height: 280px;
+        }
+        #model-info {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            width: 100%;
+            min-height: 100%;
+            transition: width 0.3s ease-in-out;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+        }
+        #model-images {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .model-placeholder-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            object-fit: cover;
+        }
+        .info-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            text-decoration: none;
+            font-size: 20px;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .model-box {
             transition: var(--transition);
@@ -97,6 +169,71 @@
         }
         .loading-overlay { background: rgba(255, 255, 255, 0.9); }
         .loader { border-top-color: var(--primary-color); }
+        #tutorialModal .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            overflow: hidden;
+        }
+        #tutorialModal .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+        }
+        #tutorialModal .modal-body { padding: 1.5rem; }
+        #tutorialModal .step-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+        #tutorialModal .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        #tutorialModal .step-content { flex-grow: 1; }
+        #tutorialModal .step-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--primary-color);
+        }
+        #tutorialModal .modal-footer {
+            border-top: none;
+            padding: 1rem 1.5rem 1.5rem;
+        }
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            opacity: 0.05;
+            z-index: -1;
+        }
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+            animation: float 8s ease-in-out infinite;
+        }
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            right: -200px;
+            animation: float 10s ease-in-out infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
         .rate-limit-banner {
             display: none;
             background-color: #fff3cd;
@@ -120,11 +257,14 @@
             <div class="col-12 col-md-10 d-flex justify-content-end align-items-center flex-wrap" style="padding-right: 30px;">
                 <a href="https://github.com/matheusmaldaner/mirage" target="_blank"
                    style="color: var(--primary-color); text-decoration: none; margin-right: 1rem; font-weight: 500;">
-                    <i class="fab fa-github"></i> Source
+                    <i class="fab fa-github"></i> Código
                 </a>
                 <a href="https://arxiv.org/abs/2511.21547" target="_blank"
                    style="color: var(--primary-color); text-decoration: none; font-weight: 500;">
-                    <i class="fas fa-file-pdf"></i> Paper
+                    <i class="fas fa-file-pdf"></i> Artigo
+                </a>
+                <a href="instructions-pt.html" title="Instruções" style="color: var(--primary-color); margin-left: 1rem;">
+                    <i class="far fa-question-circle" style="font-size: 25px;"></i>
                 </a>
             </div>
         </div>
@@ -134,6 +274,9 @@
         <i class="fas fa-info-circle"></i>
         <span id="rate-limit-message"></span>
     </div>
+
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
 
     <div id="input-and-questions-wrapper">
         <div id="image-preloader" style="display:none; visibility:hidden; height:0; width:0; overflow:hidden;"></div>
@@ -149,14 +292,36 @@
             </div>
 
             <div id="model-selection-wrapper">
-                <h6 class="mt-4 mb-3" style="color: var(--primary-color); font-weight: 500;">Selecione até 4 modelos</h6>
+                <h6 class="mt-4 mb-3" style="color: var(--primary-color); font-weight: 500;">Selecione os modelos (recomendamos 4)</h6>
                 <div id="model-selection-container" class="d-flex flex-wrap mb-3"></div>
+            </div>
+
+            <div class="form-check form-switch mb-3">
+                <input type="checkbox" class="form-check-input" id="waitForAllModelsCheckbox" checked>
+                <label class="form-check-label" for="waitForAllModelsCheckbox">
+                    Esperar todos os modelos terminarem antes de exibir
+                </label>
             </div>
 
             <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-success" id="toggle-models-button" onclick="toggleModels()">
                     <i class="fas fa-layer-group me-2"></i>Mostrar Modelos
                 </button>
+            </div>
+        </div>
+
+        <div id="form-container">
+            <div id="model-info" style="display: none;">
+                <h4 id="model-name" style="color: var(--primary-color); font-weight: 600;"></h4>
+                <p id="model-description"></p>
+                <h6 style="color: var(--primary-color); font-weight: 500;">Exemplos de Imagens:</h6>
+                <div id="model-images">
+                    <img id="model-image-1" src="images/onboarding-default-mirage-1.png" alt="Exemplo 1" class="model-placeholder-image" loading="eager" fetchpriority="high" decoding="async">
+                    <img id="model-image-2" src="images/onboarding-default-mirage-2.png" alt="Exemplo 2" class="model-placeholder-image" loading="eager" fetchpriority="high" decoding="async">
+                </div>
+                <a id="model-info-link" href="#" target="_blank" class="info-icon">
+                    <i class="fas fa-info-circle"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -171,7 +336,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: var(--primary-color); color: white;">
                     <h5 class="modal-title">Pré-visualização da Imagem</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"
                             style="background-color: white;"></button>
                 </div>
                 <div class="modal-body">
@@ -183,7 +348,51 @@
 
     <div id="loading-animation" class="loading-overlay hidden">
         <div class="loader"></div>
-        <p style="margin-top: 20px; font-weight: 500; color: var(--primary-color);">Gerando Imagens...</p>
+        <p style="margin-top: 20px; font-weight: 500; color: var(--primary-color);">Carregando Imagens...</p>
+    </div>
+
+    <div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="tutorialModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tutorialModalLabel">Bem-vindo ao MIRAGE - Tutorial Rápido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" style="background-color: white;"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Selecione Modelos</div>
+                            <p>Clique em "Mostrar Modelos" e selecione 4 modelos de IA para comparar. Passe o mouse sobre cada modelo para ver exemplos de imagens.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Digite Seu Prompt</div>
+                            <p>Insira uma descrição no campo de texto para orientar os modelos na geração de imagens.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Gere Imagens</div>
+                            <p>Clique no botão "Gerar" e aguarde enquanto os modelos criam suas imagens.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">Revise os Resultados</div>
+                            <p>Compare as imagens criadas por diferentes modelos e procure padrões recorrentes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Entendi, Vamos Começar!</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="module" src="js/constants.js"></script>

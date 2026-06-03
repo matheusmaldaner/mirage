@@ -1,8 +1,12 @@
 # MIRAGE
 
+<p align="center">
+  <img src="images/mirage-readme-banner.svg" alt="MIRAGE banner" width="100%">
+</p>
+
 Multi-model Interface for Reviewing & Auditing Generative Text-to-Image AI.
 
-Live demo: https://mirage.matheus.wiki
+**Links:** [Deployed software](https://mirage.matheus.wiki) · [CI'25 paper](https://arxiv.org/abs/2511.21547) · [HCOMP'24 paper](https://arxiv.org/abs/2503.19252)
 
 This is the open-source standalone version of [MIRAGE](https://arxiv.org/abs/2511.21547). The original demo ran on AWS Lambda + S3 + DynamoDB. This repo strips all of that out and runs on Cloudflare Pages with a single Pages Function that proxies the Replicate API.
 
@@ -45,6 +49,9 @@ Set `REPLICATE_API_TOKEN` in a local `.dev.vars` file.
 ## Citing
 
 This codebase accompanies two prior papers:
+
+- [Seeing Twice: How Side-by-Side T2I Comparison Changes Auditing Strategies](https://arxiv.org/abs/2511.21547) (ACM Collective Intelligence 2025)
+- [MIRAGE: Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI](https://arxiv.org/abs/2503.19252) (AAAI HCOMP 2024)
 
 ```
 @inproceedings{maldaner2025seeingtwice_ci,

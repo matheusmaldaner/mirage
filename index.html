@@ -7,7 +7,13 @@
     <title>MIRAGE - Compare Text-To-Image Models</title>
 
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/compare_models.css">
+    <link rel="stylesheet" type="text/css" href="css/models_display.css">
+    <link rel="stylesheet" type="text/css" href="css/report_form.css">
+    <link rel="stylesheet" type="text/css" href="css/landing_page.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,16 +41,24 @@
             justify-content: center;
             align-items: center;
             color: var(--text-color);
+            position: relative;
             overflow-x: hidden;
+            font-size: 15px;
         }
         .landing-container {
             max-width: 1120px;
             width: 100%;
-            padding: 2rem 1.25rem;
+            padding: 1.25rem;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1.25rem;
+            margin: 0 auto;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 0.5rem;
         }
         .logo-title {
             font-size: 3.5rem;
@@ -52,11 +66,14 @@
             color: var(--primary-color);
             margin: 0;
             letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         .logo-subtitle {
             font-size: 1rem;
             color: var(--light-text);
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
+            font-weight: 400;
             max-width: 600px;
             text-align: center;
         }
@@ -64,18 +81,19 @@
             font-size: 0.85rem;
             color: var(--accent-color);
             letter-spacing: 1px;
+            margin-top: 0.3rem;
             font-weight: 500;
         }
         .features-container {
             display: flex;
-            gap: 1.25rem;
-            flex-wrap: wrap;
             justify-content: center;
-            margin: 0.5rem 0;
+            gap: 1.25rem;
+            margin: 1.25rem 0;
+            flex-wrap: wrap;
         }
         .feature-card {
             background-color: white;
-            padding: 1.25rem;
+            padding: 1.1rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             width: 240px;
@@ -84,141 +102,317 @@
         }
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
         .feature-icon {
             font-size: 2rem;
             color: var(--primary-color);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
         .feature-title {
-            color: var(--primary-color);
             font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.4rem;
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
         }
         .feature-description {
             color: var(--light-text);
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .actions-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.6rem;
         }
         .language-prompt {
-            color: var(--text-color);
-            font-weight: 500;
-            font-size: 1.1rem;
-            margin: 0.5rem 0 0.75rem 0;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
         }
         .language-selection {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.25rem;
+            justify-content: center;
+            margin-top: 0.6rem;
         }
         .flag-button {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 1rem 1.25rem;
+            padding: 0.75rem;
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             text-decoration: none;
             color: var(--text-color);
             transition: var(--transition);
-            width: 140px;
+            width: 130px;
         }
         .flag-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-            color: var(--primary-color);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .flag {
-            width: 64px;
-            height: 40px;
+            width: 90px;
+            height: 60px;
             background-size: cover;
-            background-position: center;
-            margin-bottom: 0.5rem;
             border-radius: 4px;
+            margin-bottom: 0.6rem;
         }
         .flag-us { background-image: url('images/flag-us.png'); }
         .flag-br { background-image: url('images/flag-br.png'); }
         .flag-label {
-            font-weight: 600;
+            font-weight: 500;
+            margin-top: 0.3rem;
+            font-size: 0.85rem;
         }
         .papers-section {
+            max-width: 800px;
             width: 100%;
-            margin-top: 1.5rem;
+            margin: 2rem 0;
         }
         .section-title {
+            font-size: 1.2rem;
             color: var(--primary-color);
             text-align: center;
             font-weight: 600;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
         }
         .citation-encouragement {
             text-align: center;
             color: var(--light-text);
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
         }
         .papers-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
         .paper-card {
             background: white;
-            padding: 1.25rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .paper-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .paper-info {
+            margin-bottom: 1rem;
         }
         .paper-title {
-            color: var(--primary-color);
+            color: var(--text-color);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 0.5rem;
+            line-height: 1.3;
         }
         .paper-authors, .paper-venue, .paper-description {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--light-text);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
         }
-        .paper-venue { font-style: italic; }
+        .paper-authors { font-style: italic; }
+        .paper-venue {
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+        .paper-description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
         .paper-actions {
             display: flex;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
         .paper-button {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            padding: 0.5rem 0.9rem;
-            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            border-radius: var(--border-radius);
             text-decoration: none;
             font-size: 0.85rem;
-            border: 1px solid var(--primary-color);
-            background: var(--primary-color);
-            color: white;
+            font-weight: 500;
+            border: none;
             cursor: pointer;
             transition: var(--transition);
         }
-        .paper-button.secondary {
-            background: transparent;
-            color: var(--primary-color);
+        .paper-button.primary {
+            background: var(--primary-color);
+            color: white;
         }
-        .paper-button:hover { opacity: 0.85; }
+        .paper-button.primary:hover {
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+        }
+        .paper-button.secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+        .paper-button.secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
         .footer {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             text-align: center;
             color: var(--light-text);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
         .footer a {
             color: var(--primary-color);
             text-decoration: none;
         }
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background-color: rgba(16, 114, 79, 0.1);
+            top: -100px;
+            left: -150px;
+            animation: float 8s ease-in-out infinite;
+        }
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background-color: rgba(36, 180, 126, 0.1);
+            bottom: -50px;
+            right: -100px;
+            animation: float 10s ease-in-out infinite alternate;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 1rem;
+        }
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        .close {
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+        .close:hover { color: var(--primary-color); }
+        .citation-tabs {
+            display: flex;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+        }
+        .citation-tab {
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--light-text);
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+        }
+        .citation-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        .citation-tab:hover { color: var(--primary-color); }
+        .citation-content {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            min-height: 150px;
+        }
+        .citation-bibtex { font-family: 'Courier New', monospace; }
+        .copy-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 auto;
+        }
+        .copy-button:hover { background-color: var(--accent-color); }
+        @media (max-width: 768px) {
+            .logo-title { font-size: 3rem; }
+            .language-selection { gap: 1rem; }
+            .flag-button { width: 120px; }
+            .flag { width: 80px; height: 53px; }
+            .paper-actions { flex-direction: column; }
+            .modal-content { margin: 10% auto; width: 95%; padding: 1.5rem; }
+            .citation-tabs { flex-wrap: wrap; }
+            .citation-tab { padding: 0.6rem 1rem; font-size: 0.9rem; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+
     <div class="landing-container">
         <div class="logo-container animate__animated animate__fadeInDown">
             <h1 class="logo-title">MIRAGE</h1>
@@ -238,9 +432,9 @@
                 <p class="feature-description">Identify patterns, biases, and inconsistencies across different text-to-image models.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-code-branch"></i></div>
-                <h3 class="feature-title">Open Source</h3>
-                <p class="feature-description">Fork the repo, drop in a Replicate token, deploy your own MIRAGE instance.</p>
+                <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                <h3 class="feature-title">Contribute</h3>
+                <p class="feature-description">Share your findings and help improve AI systems by providing valuable feedback.</p>
             </div>
         </div>
 
@@ -263,29 +457,135 @@
             <p class="citation-encouragement">Consider citing both papers if you use MIRAGE in your research</p>
             <div class="papers-container">
                 <div class="paper-card">
-                    <h4 class="paper-title">Seeing Twice: How Side-by-Side T2I Comparison Changes Auditing Strategies</h4>
-                    <p class="paper-authors">Matheus Kunzler Maldaner, Wesley Hanwen Deng, Jason I. Hong, Ken Holstein, Motahhare Eslami</p>
-                    <p class="paper-venue">ACM Collective Intelligence 2025</p>
-                    <p class="paper-description">Demonstrates how side-by-side comparison interfaces change user auditing strategies, revealing model personalities and bias patterns in text-to-image AI systems.</p>
+                    <div class="paper-info">
+                        <h4 class="paper-title">Seeing Twice: How Side-by-Side T2I Comparison Changes Auditing Strategies</h4>
+                        <p class="paper-authors">Matheus Kunzler Maldaner, Wesley Hanwen Deng, Jason I. Hong, Ken Holstein, Motahhare Eslami</p>
+                        <p class="paper-venue">ACM Collective Intelligence 2025</p>
+                        <p class="paper-description">Demonstrates how side-by-side comparison interfaces change user auditing strategies, revealing model personalities and bias patterns in text-to-image AI systems.</p>
+                    </div>
                     <div class="paper-actions">
-                        <a href="https://arxiv.org/abs/2511.21547" target="_blank" class="paper-button"><i class="fas fa-file-pdf"></i>Read Paper</a>
+                        <a href="https://ci.acm.org/2025/wp-content/uploads/101-Maldaner.pdf" target="_blank" class="paper-button primary"><i class="fas fa-file-pdf"></i>Read Paper</a>
+                        <button class="paper-button secondary" onclick="showCitation('ci25')"><i class="fas fa-quote-left"></i>Copy Citation</button>
                     </div>
                 </div>
                 <div class="paper-card">
-                    <h4 class="paper-title">MIRAGE: Multi-model Interface for Reviewing and Auditing Generative T2I AI</h4>
-                    <p class="paper-authors">Matheus Kunzler Maldaner, Wesley Hanwen Deng, Jason I. Hong, Ken Holstein, Motahhare Eslami</p>
-                    <p class="paper-venue">AAAI Conference on Human Computation and Crowdsourcing 2024</p>
-                    <p class="paper-description">Introduces the MIRAGE system architecture and methodology for comparative analysis of multiple text-to-image models in a unified interface.</p>
+                    <div class="paper-info">
+                        <h4 class="paper-title">MIRAGE: Multi-model Interface for Reviewing and Auditing Generative T2I AI</h4>
+                        <p class="paper-authors">Matheus Kunzler Maldaner, Wesley Hanwen Deng, Jason I. Hong, Ken Holstein, Motahhare Eslami</p>
+                        <p class="paper-venue">AAAI Conference on Human Computation and Crowdsourcing 2024</p>
+                        <p class="paper-description">Introduces the MIRAGE system architecture and methodology for comparative analysis of multiple text-to-image models in a unified interface.</p>
+                    </div>
                     <div class="paper-actions">
-                        <a href="https://arxiv.org/abs/2503.19252" target="_blank" class="paper-button"><i class="fas fa-file-pdf"></i>Read Paper</a>
+                        <a href="https://www.humancomputation.com/assets/wip_2024/HCOMP_24_WIP_4.pdf" target="_blank" class="paper-button primary"><i class="fas fa-file-pdf"></i>Read Paper</a>
+                        <button class="paper-button secondary" onclick="showCitation('hcomp24')"><i class="fas fa-quote-left"></i>Copy Citation</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            <p>Open source on <a href="https://github.com/matheusmaldaner/mirage" target="_blank">GitHub</a> | MIT License</p>
+            <p>&copy; 2024 MIRAGE | Carnegie Mellon University</p>
         </div>
     </div>
+
+    <div id="citationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle" class="modal-title">Citation</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="citation-tabs">
+                <button class="citation-tab active" onclick="switchTab('bibtex')">BibTeX</button>
+                <button class="citation-tab" onclick="switchTab('apa')">APA</button>
+                <button class="citation-tab" onclick="switchTab('mla')">MLA</button>
+            </div>
+            <div class="citation-content" id="citationText"></div>
+            <button class="copy-button" onclick="copyCitationFromModal()">
+                <i class="fas fa-copy"></i>
+                Copy to Clipboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const citations = {
+            ci25: {
+                bibtex: `@inproceedings{maldaner2025seeingtwice_ci,
+  title     = {Seeing Twice: How Side-by-Side T2I Comparison Changes Auditing Strategies},
+  author    = {Kunzler Maldaner, Matheus and Deng, Wesley Hanwen and Hong, Jason I. and Holstein, Ken and Eslami, Motahhare},
+  booktitle = {Proceedings of the ACM Collective Intelligence (Poster & Demo Track)},
+  year      = {2025},
+  address   = {La Jolla, CA, USA},
+  url       = {https://arxiv.org/abs/2511.21547},
+  note      = {Demo Paper}
+}`,
+                apa: `Maldaner, M. K., Deng, W. H., Hong, J. I., Holstein, K., & Eslami, M. (2025). Seeing twice: How side-by-side T2I comparison changes auditing strategies. In Proceedings of the ACM Collective Intelligence (Poster & Demo Track). La Jolla, CA, USA. https://arxiv.org/abs/2511.21547`,
+                mla: `Maldaner, Matheus Kunzler, et al. "Seeing Twice: How Side-by-Side T2I Comparison Changes Auditing Strategies." Proceedings of the ACM Collective Intelligence (Poster & Demo Track), 2025, La Jolla, CA, USA. arXiv, https://arxiv.org/abs/2511.21547.`
+            },
+            hcomp24: {
+                bibtex: `@inproceedings{maldaner2024mirage_hcomp,
+  title     = {MIRAGE: Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI},
+  author    = {Kunzler Maldaner, Matheus and Deng, Wesley Hanwen and Hong, Jason I. and Holstein, Ken and Eslami, Motahhare},
+  booktitle = {Proceedings of the AAAI Conference on Human Computation and Crowdsourcing (HCOMP), Work-in-Progress Track},
+  year      = {2024},
+  pages     = {WIP 4},
+  address   = {Pittsburgh, PA, USA},
+  url       = {https://www.humancomputation.com/assets/wip_2024/HCOMP_24_WIP_4.pdf},
+  note      = {Work-in-Progress Paper}
+}`,
+                apa: `Maldaner, M. K., Deng, W. H., Hong, J. I., Holstein, K., & Eslami, M. (2024). MIRAGE: Multi-model interface for reviewing and auditing generative text-to-image AI. In Proceedings of the AAAI Conference on Human Computation and Crowdsourcing (HCOMP), Work-in-Progress Track (WIP 4). Pittsburgh, PA, USA.`,
+                mla: `Maldaner, Matheus Kunzler, et al. "MIRAGE: Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI." Proceedings of the AAAI Conference on Human Computation and Crowdsourcing (HCOMP), Work-in-Progress Track, 2024, Pittsburgh, PA, USA, WIP 4.`
+            }
+        };
+
+        let currentPaper = '';
+        let currentFormat = 'bibtex';
+
+        function showCitation(paperType) {
+            currentPaper = paperType;
+            currentFormat = 'bibtex';
+            document.querySelectorAll('.citation-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(".citation-tab[onclick=\"switchTab('bibtex')\"]").classList.add('active');
+            document.getElementById('modalTitle').textContent = paperType === 'ci25' ? "CI'25 Paper Citation" : "HCOMP'24 Paper Citation";
+            updateCitationDisplay();
+            document.getElementById('citationModal').style.display = 'block';
+        }
+
+        function switchTab(format) {
+            currentFormat = format;
+            document.querySelectorAll('.citation-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`.citation-tab[onclick="switchTab('${format}')"]`).classList.add('active');
+            updateCitationDisplay();
+        }
+
+        function updateCitationDisplay() {
+            const citationText = document.getElementById('citationText');
+            citationText.textContent = citations[currentPaper][currentFormat];
+            citationText.className = `citation-content citation-${currentFormat}`;
+        }
+
+        function closeModal() {
+            document.getElementById('citationModal').style.display = 'none';
+        }
+
+        function copyCitationFromModal() {
+            navigator.clipboard.writeText(citations[currentPaper][currentFormat]);
+            closeModal();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('citationModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate__animated');
+            animateElements.forEach(element => {
+                element.style.opacity = '1';
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2500" height="768" viewBox="0 0 2500 768" role="img" aria-labelledby="title desc">
+  <title id="title">MIRAGE banner</title>
+  <desc id="desc">MIRAGE wordmark surrounded by text-to-image comparison and audit icons.</desc>
+  <defs>
+    <linearGradient id="word" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1f2937"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#111827" stop-opacity=".18"/>
+      <stop offset=".7" stop-color="#111827" stop-opacity="0"/>
+    </linearGradient>
+    <style>
+      .line{fill:none;stroke:#a8b0bd;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+      .blue{fill:none;stroke:#68a7ed;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+      .soft{fill:none;stroke:#c3c9d3;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:9 13}
+      .txt{font-family:DejaVu Sans,Arial,sans-serif;font-weight:700;letter-spacing:6px}
+    </style>
+  </defs>
+  <rect width="2500" height="768" fill="#fff"/>
+
+  <g transform="translate(88 256)">
+    <g transform="translate(0 0)">
+      <rect class="line" x="0" y="0" width="122" height="112" rx="10"/>
+      <circle class="blue" cx="28" cy="28" r="10"/>
+      <path class="line" d="M16 94l33-50 34 47 18-26 20 29"/>
+      <path class="soft" d="M60 118v70h72"/>
+      <path class="line" d="M42 150c15-25 53-25 68 0"/>
+      <path class="line" d="M55 150c0-28 43-28 43 0"/>
+    </g>
+    <g transform="translate(140 0)">
+      <rect class="line" x="0" y="0" width="122" height="112" rx="10"/>
+      <circle class="blue" cx="28" cy="28" r="10"/>
+      <path class="blue" d="M16 94l35-50 32 46"/>
+      <path class="line" d="M54 58c10-19 51-19 58 0 19 0 19 28 0 28H57c-18 0-22-23-3-28z"/>
+      <path class="soft" d="M62 118v70"/>
+      <path class="line" d="M36 150l16 16 16-16"/>
+      <path class="line" d="M92 136l16 28 16-28"/>
+    </g>
+    <g transform="translate(280 0)">
+      <rect class="line" x="0" y="0" width="122" height="112" rx="10"/>
+      <circle class="blue" cx="28" cy="28" r="10"/>
+      <path class="line" d="M16 94l33-50 34 47 18-26 20 29"/>
+      <path class="soft" d="M61 118v70"/>
+      <path class="line" d="M46 172h30"/>
+      <path class="line" d="M54 172l16-58 17 58"/>
+    </g>
+    <g transform="translate(420 0)">
+      <rect class="line" x="0" y="0" width="122" height="112" rx="10"/>
+      <circle class="blue" cx="28" cy="28" r="10"/>
+      <path class="line" d="M16 94h94M30 94V64m25 30V44m25 50V28m25 66V52"/>
+      <path class="soft" d="M61 118v70"/>
+      <g class="line" transform="translate(42 142)">
+        <rect x="0" y="0" width="12" height="12"/>
+        <rect x="22" y="0" width="12" height="12"/>
+        <rect x="44" y="0" width="12" height="12"/>
+        <rect x="0" y="22" width="12" height="12"/>
+        <rect x="22" y="22" width="12" height="12"/>
+        <rect x="44" y="22" width="12" height="12"/>
+      </g>
+    </g>
+    <path class="soft" d="M0 205h542"/>
+  </g>
+
+  <g transform="translate(650 238)">
+    <text class="txt" x="0" y="170" font-size="210" fill="url(#word)">MIRAGE</text>
+  </g>
+
+  <g transform="translate(1808 260)">
+    <circle class="line" cx="78" cy="72" r="62"/>
+    <circle class="line" cx="78" cy="72" r="78"/>
+    <path class="line" d="M34 112l30-43 27 36 18-25 27 32"/>
+    <circle class="blue" cx="45" cy="42" r="10"/>
+    <circle class="blue" cx="124" cy="42" r="10"/>
+    <path class="line" d="M137 131l76 76"/>
+    <rect class="line" x="195" y="183" width="35" height="96" rx="12" transform="rotate(-45 212 231)"/>
+  </g>
+
+  <g transform="translate(2038 250)">
+    <path class="soft" d="M0 0v260h170"/>
+    <circle class="blue" cx="0" cy="0" r="4"/>
+    <circle class="blue" cx="0" cy="64" r="4"/>
+    <g transform="translate(38 -28)">
+      <circle class="line" cx="28" cy="20" r="16"/>
+      <path class="line" d="M0 72c8-29 48-29 56 0"/>
+    </g>
+    <g transform="translate(36 70)">
+      <path class="blue" d="M0 32h64"/>
+      <path class="blue" d="M32 0v64"/>
+      <path class="line" d="M0 32l-22 46h44L0 32zm64 0l-22 46h44L64 32z"/>
+    </g>
+    <g transform="translate(32 150)">
+      <path class="blue" d="M32 0l32 62H0z"/>
+      <path class="blue" d="M32 18v20m0 12v2"/>
+    </g>
+    <circle class="soft" cx="64" cy="238" r="22"/>
+  </g>
+
+  <g transform="translate(2152 220)">
+    <rect class="line" x="0" y="0" width="196" height="288" rx="10"/>
+    <g transform="translate(24 32)">
+      <rect class="line" x="0" y="0" width="32" height="32"/>
+      <path class="blue" d="M6 14l12 12L42 -2"/>
+      <path class="line" d="M62 10h64M62 24h48"/>
+    </g>
+    <g transform="translate(24 96)">
+      <rect class="line" x="0" y="0" width="32" height="32"/>
+      <path class="blue" d="M6 14l12 12L42 -2"/>
+      <path class="line" d="M62 10h64M62 24h48"/>
+    </g>
+    <g transform="translate(24 160)">
+      <rect class="line" x="0" y="0" width="32" height="32"/>
+      <path class="line" d="M62 10h64M62 24h48"/>
+    </g>
+    <g transform="translate(24 224)">
+      <rect class="line" x="0" y="0" width="32" height="32"/>
+      <path class="blue" d="M48 8h24v24H48zM72 16h18"/>
+      <path class="line" d="M90 10h44M90 24h56"/>
+    </g>
+  </g>
+</svg>

@@ -88,11 +88,11 @@ body {
 }
 
 .flag-us {
-    background-image: url('/static/mirage/images/flag-us.png');
+    background-image: url('../images/flag-us.png');
 }
 
 .flag-br {
-    background-image: url('/static/mirage/images/flag-br.png');
+    background-image: url('../images/flag-br.png');
 }
 
 /* New styles for the enhanced design */

@@ -1,89 +1,302 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MIRAGE - Como Funciona</title>
 
+<head>
+    <title>MIRAGE - Instruções</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="MIRAGE - Interface Multi-modelo para Revisão e Auditoria de IA Generativa de Texto para Imagem">
+
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/compare_models.css">
+    <link rel="stylesheet" type="text/css" href="css/models_display.css">
+    <link rel="stylesheet" type="text/css" href="css/report_form.css">
+    <link rel="stylesheet" type="text/css" href="css/landing_page.css">
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --primary-color: #10724f;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
             --light-text: #666;
+            --accent-color: #24b47e;
             --border-radius: 8px;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            --card-width: 380px;
+            --card-gap: 2rem;
         }
+
+        html, body {
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            color: #333;
-            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-color);
+            position: relative;
+            font-size: 15px;
         }
-        .container-narrow { max-width: 1100px; margin: 0 auto; text-align: center; }
-        .logo-title { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); letter-spacing: 2px; }
-        .intro { max-width: 760px; margin: 0 auto 1.5rem; color: var(--light-text); font-size: 0.95rem; line-height: 1.5; }
-        .intro p { margin-bottom: 0.5rem; }
-        .intro a { color: var(--primary-color); text-decoration: none; font-weight: 500; }
-        .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; }
-        .step-card { background-color: white; border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; transition: var(--transition); position: relative; }
-        .step-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-        .step-number { background-color: var(--primary-color); color: white; width: 40px; height: 40px; border-radius: 50%; position: absolute; top: 12px; left: 12px; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.2rem; z-index: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        .step-image { width: 100%; height: 230px; object-fit: cover; border-bottom: 1px solid #eee; background: #f0f0f0; }
-        .step-content { padding: 1.25rem 1rem; }
-        .step-title { color: var(--primary-color); font-weight: 600; margin-bottom: 0.5rem; }
-        .step-description { color: var(--light-text); font-size: 0.95rem; line-height: 1.4; }
-        .primary-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary-color); color: white; padding: 0.75rem 1.5rem; border-radius: var(--border-radius); text-decoration: none; font-weight: 600; border: none; cursor: pointer; margin-top: 1rem; transition: var(--transition); }
-        .primary-btn:hover { background: #0d5f42; transform: translateY(-2px); color: white; }
-        .back-link { display: inline-block; margin-bottom: 1rem; color: var(--light-text); text-decoration: none; font-size: 0.9rem; }
-        .back-link:hover { color: var(--primary-color); }
+
+        .main-container {
+            max-width: 100%;
+            width: 100%;
+            padding: 2rem 2rem 0;
+            box-sizing: border-box;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .study-info {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.25rem;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color);
+            width: calc(3 * var(--card-width) + 2 * var(--card-gap));
+            max-width: 1260px;
+        }
+
+        .study-info-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .steps-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--card-gap);
+            margin: 0 0 1.5rem 0;
+            width: 100%;
+            max-width: 1260px;
+        }
+
+        .step-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: var(--card-width);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            border-radius: 50%;
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 1;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-image {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .step-content {
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .step-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .step-description {
+            color: var(--light-text);
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        .button-container {
+            width: 100%;
+            max-width: 1260px;
+            text-align: center;
+        }
+
+        .action-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 0.5rem;
+        }
+
+        .action-button:hover {
+            background-color: #0d5f42;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .researcher-info {
+            text-align: center;
+            padding: 0.75rem 0;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            margin-bottom: 0;
+            width: 100%;
+            max-width: 1260px;
+        }
+
+        .researcher-info a {
+            color: var(--primary-color);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .researcher-info a:hover {
+            text-decoration: underline;
+        }
+
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            right: -200px;
+            animation: float 10s ease-in-out infinite alternate;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container-narrow">
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar para a página inicial</a>
-        <h1 class="logo-title animate__animated animate__fadeInDown">MIRAGE</h1>
-        <div class="intro animate__animated animate__fadeIn">
-            <p>MIRAGE foi criado por <a href="https://matheus.wiki" target="_blank">Matheus Kunzler Maldaner</a> durante um REU de verão na Carnegie Mellon University, trabalhando com <a href="https://wesleydeng.com/" target="_blank">Wesley Hanwen Deng</a>, e os professores <a href="https://hcii.cmu.edu/people/motahhare-eslami" target="_blank">Motahhare Eslami</a>, <a href="https://hcii.cmu.edu/people/ken-holstein" target="_blank">Ken Holstein</a> e <a href="https://www.hcii.cmu.edu/people/jason-hong" target="_blank">Jason Hong</a>.</p>
-            <p>Encontre padrões e detecte inconsistências em imagens geradas por IA a partir de múltiplos modelos de texto-para-imagem.</p>
-        </div>
+    <div class="content-wrapper">
+        <div class="decorative-circle circle-1"></div>
+        <div class="decorative-circle circle-2"></div>
 
-        <div class="steps-container animate__animated animate__fadeInUp">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <img src="images/onboarding-default-mirage-1.png" alt="Selecione os Modelos" class="step-image" onerror="this.style.display='none'">
-                <div class="step-content">
-                    <h4 class="step-title">Selecione os Modelos</h4>
-                    <p class="step-description">Selecione até 4 modelos diferentes de IA texto-para-imagem da lista.</p>
+        <div class="main-container">
+            <div class="study-info animate__animated animate__fadeIn">
+                <h3 class="study-info-title">Versão Personalizada para Estudo Acadêmico</h3>
+                <p>Esta é uma versão personalizada do MIRAGE desenvolvida para um estudo sendo conduzido em parceria com a Universidade UNISINOS no Brasil, sob a supervisão do Professor <a style="color: var(--primary-color);" href="https://www.unisinos.br/professores/gustavo-daudt-fischer/" target="_blank">Gustavo Daudt Fischer</a>.</p>
+                <p style="margin-bottom: 0">Ao participar deste estudo, você contribui para pesquisas importantes sobre IA generativa e seus impactos sociais e culturais.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card animate__animated animate__fadeInUp">
+                    <div class="step-number">1</div>
+                    <img src="images/mirage-default-gif-1.gif" alt="Passo 1" class="step-image">
+                    <div class="step-content">
+                        <h4 class="step-title">Selecionar Modelos</h4>
+                        <p class="step-description">Selecione até 4 modelos diferentes de IA de Texto-Para-Imagem da lista disponível.</p>
+                    </div>
+                </div>
+
+                <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="step-number">2</div>
+                    <img src="images/mirage-default-gif-2-faster.gif" alt="Passo 2" class="step-image">
+                    <div class="step-content">
+                        <h4 class="step-title">Escreva Seu Prompt</h4>
+                        <p class="step-description">Escreva seu prompt, clique em 'Gerar' e aguarde as imagens aparecerem na tela.</p>
+                    </div>
+                </div>
+
+                <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="step-number">3</div>
+                    <img src="images/mirage-default-gif-3.gif" alt="Passo 3" class="step-image">
+                    <div class="step-content">
+                        <h4 class="step-title">Observe os Resultados</h4>
+                        <p class="step-description">Selecione quais modelos corresponderam às suas expectativas iniciais.</p>
+                    </div>
                 </div>
             </div>
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <img src="images/onboarding-default-mirage-2.png" alt="Escreva seu Prompt" class="step-image" onerror="this.style.display='none'">
-                <div class="step-content">
-                    <h4 class="step-title">Escreva seu Prompt</h4>
-                    <p class="step-description">Escreva seu prompt, clique em 'Gerar' e aguarde as imagens aparecerem.</p>
-                </div>
+
+            <div class="button-container">
+                <a href="compare-pt.html" class="action-button animate__animated animate__fadeIn animate__delay-1s">
+                    Começar
+                </a>
             </div>
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <img src="images/onboarding-default-mirage-3.png" alt="Observe os Resultados" class="step-image" onerror="this.style.display='none'">
-                <div class="step-content">
-                    <h4 class="step-title">Observe os Resultados</h4>
-                    <p class="step-description">Compare as saídas lado a lado. Note padrões, vieses ou inconsistências entre modelos.</p>
-                </div>
+
+            <div class="researcher-info animate__animated animate__fadeIn">
+                <span>Se você é um pesquisador e gostaria de utilizar o MIRAGE para seus próprios estudos, entre em contato com <a href="mailto:mkunzlermaldaner@ufl.edu">mkunzlermaldaner@ufl.edu</a>.</span>
             </div>
         </div>
-
-        <a href="compare-pt.html" class="primary-btn animate__animated animate__fadeIn animate__delay-1s">
-            <i class="fas fa-play"></i> Começar
-        </a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate__animated');
+            animateElements.forEach(element => {
+                element.style.opacity = '1';
+            });
+        });
+    </script>
 </body>
+
 </html>

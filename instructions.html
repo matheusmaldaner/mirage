@@ -1,172 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MIRAGE - How It Works</title>
 
+<head>
+    <title>MIRAGE - Instructions</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="MIRAGE - Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI">
+
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/compare_models.css">
+    <link rel="stylesheet" type="text/css" href="css/models_display.css">
+    <link rel="stylesheet" type="text/css" href="css/report_form.css">
+    <link rel="stylesheet" type="text/css" href="css/landing_page.css">
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --primary-color: #10724f;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
             --light-text: #666;
+            --accent-color: #24b47e;
             --border-radius: 8px;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            --card-width: 380px;
+            --card-gap: 2rem;
         }
+
+        html, body {
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            color: #333;
-            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-color);
+            position: relative;
+            font-size: 15px;
         }
-        .container-narrow {
-            max-width: 1100px;
+
+        .main-container {
+            max-width: 100%;
+            width: 100%;
+            padding: 2rem 2rem 0;
+            box-sizing: border-box;
             margin: 0 auto;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .logo-title {
-            font-size: 2.5rem;
-            font-weight: 700;
+
+        .study-info {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.25rem;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color);
+            width: calc(3 * var(--card-width) + 2 * var(--card-gap));
+            max-width: 1260px;
+        }
+
+        .study-info-title {
             color: var(--primary-color);
-            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
         }
-        .intro {
-            max-width: 760px;
-            margin: 0 auto 1.5rem;
-            color: var(--light-text);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        .intro p { margin-bottom: 0.5rem; }
-        .intro a { color: var(--primary-color); text-decoration: none; font-weight: 500; }
+
         .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.25rem;
-            margin: 1.5rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--card-gap);
+            margin: 0 0 1.5rem 0;
+            width: 100%;
+            max-width: 1260px;
         }
+
         .step-card {
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
+            width: var(--card-width);
             overflow: hidden;
             transition: var(--transition);
             position: relative;
-            padding-top: 0;
         }
+
         .step-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
+
         .step-number {
             background-color: var(--primary-color);
             color: white;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            position: absolute;
-            top: 12px;
-            left: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border-radius: 50%;
+            position: absolute;
+            top: 12px;
+            left: 12px;
             z-index: 1;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
+
         .step-image {
             width: 100%;
             height: 230px;
             object-fit: cover;
             border-bottom: 1px solid #eee;
-            background: #f0f0f0;
         }
+
         .step-content {
             padding: 1.25rem 1rem;
+            text-align: center;
         }
+
         .step-title {
             color: var(--primary-color);
             font-weight: 600;
             margin-bottom: 0.5rem;
+            font-size: 1.2rem;
         }
+
         .step-description {
             color: var(--light-text);
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.4;
+            margin-bottom: 0;
         }
-        .primary-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--primary-color);
+
+        .button-container {
+            width: 100%;
+            max-width: 1260px;
+            text-align: center;
+        }
+
+        .action-button {
+            background-color: var(--primary-color);
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 600;
             border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            font-size: 1.1rem;
             cursor: pointer;
-            margin-top: 1rem;
             transition: var(--transition);
-        }
-        .primary-btn:hover { background: #0d5f42; transform: translateY(-2px); color: white; }
-        .back-link {
             display: inline-block;
-            margin-bottom: 1rem;
-            color: var(--light-text);
             text-decoration: none;
-            font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
-        .back-link:hover { color: var(--primary-color); }
+
+        .action-button:hover {
+            background-color: #0d5f42;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .researcher-info {
+            text-align: center;
+            padding: 0.75rem 0;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            margin-bottom: 0;
+            width: 100%;
+            max-width: 1260px;
+        }
+
+        .researcher-info a {
+            color: var(--primary-color);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .researcher-info a:hover {
+            text-decoration: underline;
+        }
+
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            right: -200px;
+            animation: float 10s ease-in-out infinite alternate;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container-narrow">
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to home</a>
-        <h1 class="logo-title animate__animated animate__fadeInDown">MIRAGE</h1>
-        <div class="intro animate__animated animate__fadeIn">
-            <p>MIRAGE was created by <a href="https://matheus.wiki" target="_blank">Matheus Kunzler Maldaner</a> during a summer REU at Carnegie Mellon University working with <a href="https://wesleydeng.com/" target="_blank">Wesley Hanwen Deng</a>, and professors <a href="https://hcii.cmu.edu/people/motahhare-eslami" target="_blank">Motahhare Eslami</a>, <a href="https://hcii.cmu.edu/people/ken-holstein" target="_blank">Ken Holstein</a>, and <a href="https://www.hcii.cmu.edu/people/jason-hong" target="_blank">Jason Hong</a>.</p>
-            <p>Find patterns and detect inconsistencies in AI generated images from multiple text-to-image models.</p>
-        </div>
+    <div class="content-wrapper">
+        <div class="decorative-circle circle-1"></div>
+        <div class="decorative-circle circle-2"></div>
 
-        <div class="steps-container animate__animated animate__fadeInUp">
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <img src="images/onboarding-default-mirage-1.png" alt="Select Models" class="step-image" onerror="this.style.display='none'">
-                <div class="step-content">
-                    <h4 class="step-title">Select Models</h4>
-                    <p class="step-description">Select up to 4 different Text-To-Image AI Models from the list.</p>
+        <div class="main-container">
+            <div class="study-info animate__animated animate__fadeIn">
+                <h3 class="study-info-title">About MIRAGE</h3>
+                <p>MIRAGE was created by <a style="color: var(--primary-color);" href="https://matheus.wiki" target="_blank">Matheus Kunzler Maldaner</a> during a summer REU at Carnegie Mellon University working with <a style="color: var(--primary-color);" href="https://wesleydeng.com/" target="_blank">Wesley Hanwen Deng</a>, as well as professors <a style="color: var(--primary-color);" href="https://hcii.cmu.edu/people/motahhare-eslami" target="_blank">Motahhare Eslami</a>, <a style="color: var(--primary-color);" href="https://hcii.cmu.edu/people/ken-holstein" target="_blank">Ken Holstein</a>, and <a style="color: var(--primary-color);" href="https://www.hcii.cmu.edu/people/jason-hong" target="_blank">Jason Hong</a>.</p>
+                <p style="margin-bottom: 0">Find patterns and detect inconsistencies in AI generated images from multiple text-to-image models.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card animate__animated animate__fadeInUp">
+                    <div class="step-number">1</div>
+                    <img src="images/mirage-default-gif-1.gif" alt="Step 1" class="step-image">
+                    <div class="step-content">
+                        <h4 class="step-title">Select Models</h4>
+                        <p class="step-description">Select up to 4 different Text-To-Image AI Models from the list.</p>
+                    </div>
+                </div>
+
+                <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="step-number">2</div>
+                    <img src="images/mirage-default-gif-2-faster.gif" alt="Step 2" class="step-image">
+                    <div class="step-content">
+                        <h4 class="step-title">Write Your Prompt</h4>
+                        <p class="step-description">Write your prompt, click 'Generate' and wait for the images to appear.</p>
+                    </div>
+                </div>
+
+                <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="step-number">3</div>
+                    <img src="images/mirage-default-gif-3.gif" alt="Step 3" class="step-image">
+                    <div class="step-content">
+                        <h4 class="step-title">Observe The Results</h4>
+                        <p class="step-description">Select which models matched your original expectations.</p>
+                    </div>
                 </div>
             </div>
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <img src="images/onboarding-default-mirage-2.png" alt="Write Your Prompt" class="step-image" onerror="this.style.display='none'">
-                <div class="step-content">
-                    <h4 class="step-title">Write Your Prompt</h4>
-                    <p class="step-description">Write your prompt, click 'Generate' and wait for the images to appear.</p>
-                </div>
+
+            <div class="button-container">
+                <a href="compare.html" class="action-button animate__animated animate__fadeIn animate__delay-1s">
+                    Begin
+                </a>
             </div>
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <img src="images/onboarding-default-mirage-3.png" alt="Observe The Results" class="step-image" onerror="this.style.display='none'">
-                <div class="step-content">
-                    <h4 class="step-title">Observe The Results</h4>
-                    <p class="step-description">Compare the outputs side by side. Notice patterns, biases, or inconsistencies between models.</p>
-                </div>
+
+            <div class="researcher-info animate__animated animate__fadeIn">
+                <span>If you want to do research with MIRAGE, contact <a href="mailto:mkunzlermaldaner@ufl.edu">mkunzlermaldaner@ufl.edu</a></span>
             </div>
         </div>
-
-        <a href="compare.html" class="primary-btn animate__animated animate__fadeIn animate__delay-1s">
-            <i class="fas fa-play"></i> Get Started
-        </a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate__animated');
+            animateElements.forEach(element => {
+                element.style.opacity = '1';
+            });
+        });
+    </script>
 </body>
+
 </html>
