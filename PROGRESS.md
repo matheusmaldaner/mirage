@@ -94,6 +94,7 @@
 - Input/count 422 fix - 2026-06-04 - many models now cap num_outputs at 4 or use different count fields; switched to minimal { prompt } + per-model count, verified across all 30 models, redeployed
 - realvisxl2-lcm warm-up note - 2026-06-04 - added an italic EN/PT hover note instead of dropping the slow model
 - Auto-deploy via GitHub Actions - 2026-06-04 - .github/workflows/deploy.yml deploys to Pages on push to main; secrets CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID set
+- Perceived latency optimizations - 2026-06-04 - Refactored model preloader to only fetch teasers; localized teaser images to eliminate 3rd-party CDN latency/expiration; removed unused jQuery/Poppins; added progressive reveal (wait-for-all=false) and async/lazy image loading to improve LCP/CLS
 
 ---
 

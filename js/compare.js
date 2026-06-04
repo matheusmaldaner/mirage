@@ -21,7 +21,7 @@ const L = IS_PT
 
 let selectedModels = new Set();
 let modelSelectionEnabled = true;
-let waitForAllModels = true;
+let waitForAllModels = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     const generateButton = document.getElementById('generate-button');
@@ -293,7 +293,7 @@ function displayResult(modelName, images, order) {
     if (Array.isArray(images) && images.length > 0) {
         let content = `<h5>${escapeHtml(modelName)}</h5>`;
         images.forEach((image, index) => {
-            content += `<img src="${escapeAttr(image)}" alt="${escapeAttr(L.alt(modelName, index + 1))}" class="model-output-image" onError="this.style.display='none';" />`;
+            content += `<img src="${escapeAttr(image)}" alt="${escapeAttr(L.alt(modelName, index + 1))}" class="model-output-image" decoding="async" loading="lazy" onError="this.style.display='none';" />`;
         });
         result.innerHTML = content;
     } else {

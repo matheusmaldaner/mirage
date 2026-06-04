@@ -101,6 +101,7 @@
 /* Styles for images to make them smaller, maintain aspect ratio, and rounded */
 #comparison-results .result img {
     width: calc(48% - 2px - 2*1px); /* Adjusts width to account for margin; assumes 1px margin */
+    aspect-ratio: 1 / 1;
     height: auto; /* Maintains the aspect ratio of the image */
     margin: 3px; /* Adds space around the image */
     border-radius: 10px; /* Rounds the corners of the images */
