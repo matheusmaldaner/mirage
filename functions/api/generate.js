@@ -1,4 +1,9 @@
-// cloudflare pages function: synchronous replicate proxy with optional per-ip rate limit
+// cloudflare pages function: async replicate proxy with optional per-ip rate limit
+//
+// POST /api/generate creates a prediction and returns { id, status, output } right away,
+// with a short server-side wait so fast models come back already finished. slow models
+// return status "processing" and the browser polls GET /api/status?id=... until done, so no
+// single request stays open long enough to hit cloudflare's edge timeout.
 //
 // env bindings expected:
 //   REPLICATE_API_TOKEN   - string, required
@@ -6,8 +11,8 @@
 //   RATE_LIMIT_KV         - kv namespace binding, optional. if absent, rate limiting is off
 
 const REPLICATE_URL = 'https://api.replicate.com/v1/predictions';
-const MAX_POLL_ATTEMPTS = 30;
-const POLL_INTERVAL_MS = 2000;
+// seconds replicate holds the create request before returning (max 60); fast models finish here
+const CREATE_WAIT_SECONDS = 10;
 
 // per-model parameter overrides ported from the old django mirageFunction.py
 // these win over whatever the client sends so the call actually validates at replicate
@@ -44,6 +49,19 @@ const MODEL_OVERRIDES = {
   },
 };
 
+// newer official replicate models use prompt-first schemas and reject the legacy
+// scheduler/guidance_scale/num_inference_steps/num_outputs/negative_prompt params.
+// `params` is sent verbatim with the prompt; `num_key` is the batch field
+// (null means the model only ever returns a single image).
+const PROMPT_FIRST_MODELS = {
+  'black-forest-labs/flux-1.1-pro': { params: { aspect_ratio: '1:1' }, num_key: null },
+  'recraft-ai/recraft-v3': { params: {}, num_key: null },
+  'stability-ai/stable-diffusion-3.5-large': { params: { aspect_ratio: '1:1' }, num_key: null },
+  'luma/photon': { params: { aspect_ratio: '1:1' }, num_key: null },
+  'luma/photon-flash': { params: { aspect_ratio: '1:1' }, num_key: null },
+  'fofr/aura-flow': { params: {}, num_key: 'number_of_images', max_outputs: 8 },
+};
+
 export async function onRequestPost({ request, env }) {
   if (!env.REPLICATE_API_TOKEN) {
     return jsonResponse({ error: 'server missing REPLICATE_API_TOKEN' }, 500);
@@ -68,31 +86,40 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse({ error: 'model_name and prompt are required' }, 400);
   }
 
-  // apply model-specific overrides if known, else default params
-  const ov = MODEL_OVERRIDES[model_name] || {};
   const requested = Math.max(1, Math.min(parseInt(num, 10) || 1, 8));
-  const maxOut = ov.max_outputs || 8;
-  const numImages = Math.min(requested, maxOut);
-  const numKey = ov.num_key || 'num_outputs';
 
-  const input = {
-    prompt,
-    width: ov.width || 768,
-    height: ov.height || 768,
-    scheduler: ov.scheduler || 'K_EULER',
-    guidance_scale: ov.guidance_scale ?? 7.5,
-    num_inference_steps: ov.num_inference_steps || 20,
-    negative_prompt: ov.negative_prompt || '',
-    [numKey]: numImages,
-  };
+  let input;
+  if (PROMPT_FIRST_MODELS[model_name]) {
+    // prompt-first official model: only send params it actually accepts
+    const cfg = PROMPT_FIRST_MODELS[model_name];
+    input = { prompt, ...cfg.params };
+    if (cfg.num_key) {
+      input[cfg.num_key] = Math.min(requested, cfg.max_outputs || 8);
+    }
+  } else {
+    // legacy stable-diffusion-style model: apply overrides over the shared default
+    const ov = MODEL_OVERRIDES[model_name] || {};
+    const numImages = Math.min(requested, ov.max_outputs || 8);
+    const numKey = ov.num_key || 'num_outputs';
+    input = {
+      prompt,
+      width: ov.width || 768,
+      height: ov.height || 768,
+      scheduler: ov.scheduler || 'K_EULER',
+      guidance_scale: ov.guidance_scale ?? 7.5,
+      num_inference_steps: ov.num_inference_steps || 20,
+      negative_prompt: ov.negative_prompt || '',
+      [numKey]: numImages,
+    };
+  }
 
-  // create the prediction with prefer: wait so replicate holds the connection until it's done
+  // create the prediction; prefer a short wait so quick models return already finished
   const createRes = await fetch(REPLICATE_URL, {
     method: 'POST',
     headers: {
       'Authorization': `Token ${env.REPLICATE_API_TOKEN}`,
       'Content-Type': 'application/json',
-      'Prefer': 'wait',
+      'Prefer': `wait=${CREATE_WAIT_SECONDS}`,
     },
     body: JSON.stringify(model_version_id && model_version_id !== 'X'
       ? { version: model_version_id, input }
@@ -104,40 +131,18 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse({ error: 'replicate rejected the request', detail: text }, createRes.status);
   }
 
-  let prediction = await createRes.json();
+  // return the prediction's current state; the browser polls /api/status if it is not done yet
+  return jsonResponse(predictionState(await createRes.json()));
+}
 
-  // poll if still running after the wait window
-  let attempts = 0;
-  while ((prediction.status === 'starting' || prediction.status === 'processing') && attempts < MAX_POLL_ATTEMPTS) {
-    await new Promise(r => setTimeout(r, POLL_INTERVAL_MS));
-    attempts++;
-    const pollRes = await fetch(prediction.urls.get, {
-      headers: { 'Authorization': `Token ${env.REPLICATE_API_TOKEN}` },
-    });
-    if (!pollRes.ok) {
-      return jsonResponse({ error: 'replicate poll failed' }, 502);
-    }
-    prediction = await pollRes.json();
-  }
-
-  if (prediction.status !== 'succeeded') {
-    return jsonResponse({
-      error: 'generation did not succeed',
-      status: prediction.status,
-      detail: prediction.error || null,
-    }, 502);
-  }
-
-  const output = Array.isArray(prediction.output) ? prediction.output : [prediction.output];
-
-  // shape matches the legacy expectation from the django version so the frontend stays simple
-  return jsonResponse({
-    Status: 'Completed',
-    ImageUrls: output,
-    output,
-    model_name,
-    model_version_id,
-  });
+// normalizes a replicate prediction into the small shape the frontend polls on
+function predictionState(p) {
+  return {
+    id: p.id,
+    status: p.status,
+    output: p.output == null ? null : (Array.isArray(p.output) ? p.output : [p.output]),
+    error: p.error || null,
+  };
 }
 
 export async function onRequestOptions() {

@@ -151,7 +151,7 @@ export const MODELS = {
     "FLUX_1_1_PRO": {
         name: "Flux 1.1 Pro",
         id: "black-forest-labs/flux-1.1-pro",
-        version: "NONE",
+        version: "609793a667ed94b210242837d3c3c9fc9a64ae93685f15d75002ba0ed9a97f2b",
         link: "https://replicate.com/black-forest-labs/flux-1.1-pro",
         teaser: "https://replicate.delivery/czjl/XetPfMnnBtnyLUNiNcnl2Hneyeo8AsfsOl2AG5Znql5f3VK9E/tmpuv7lgrx7.jpg",
         images: [
@@ -356,7 +356,7 @@ export const MODELS = {
     "RECRAFT_V3": {
         name: "Recraft V3",
         id: "recraft-ai/recraft-v3",
-        version: "X",
+        version: "9507e61ddace8b3a238371b17a61be203747c5081ea6070fecd3c40d27318922",
         link: "https://replicate.com/recraft-ai/recraft-v3",
         teaser: "https://replicate.delivery/czjl/eTxDZunLeFulD0734CMCIuhP6llmZbgtbxfjzyfi4hxAAOwOB/output.webp",
         images: [
@@ -387,7 +387,7 @@ export const MODELS = {
     "STABLE_DIFFUSION_3_5_LARGE": {
         name: "Stable Diffusion 3.5 Large",
         id: "stability-ai/stable-diffusion-3.5-large",
-        version: "X",
+        version: "2fdf9488b53c1e0fd3aef7b477def1c00d1856a38466733711f9c769942598f5",
         link: "https://replicate.com/stability-ai/stable-diffusion-3.5-large",
         teaser: "https://replicate.delivery/yhqm/x5swvMgXyDr5JxhAqWf7Sty3YdzweRHHgG6EZA5ndfN0WwSnA/R8_sd3.5L_00001_.webp",
         images: [
@@ -403,7 +403,7 @@ export const MODELS = {
     "LUMA_PHOTON": {
         name: "Luma Photon",
         id: "luma/photon",
-        version: "X",
+        version: "fe142c037cf359764f2058c3a42ef0dc750d908311d02868cbc7769fe800b648",
         link: "https://replicate.com/luma/photon",
         teaser: "https://replicate.delivery/czjl/bN35SK7p4yqNAxfG9Tgak5YuyfvTcGiAbqPltpbKEc0VRfJoA/tmp95lh8mhu.jpg",
         images: [
@@ -419,7 +419,7 @@ export const MODELS = {
     "LUMA_PHOTON_FLASH": {
         name: "Luma Photon Flash",
         id: "luma/photon-flash",
-        version: "X",
+        version: "8cee7d47f81d8f4f77c1aec44ffb3d1ce09d36388db637ceaa8a6cbcf30b63e1",
         link: "https://replicate.com/luma/photon-flash",
         teaser: "https://replicate.delivery/czjl/6iZ89qakg74mCVjFYeDk0GljoYQReoV0k7WwSjxXmCLcV53TA/tmpyf9dx02r.jpg",
         images: [
@@ -434,7 +434,7 @@ export const MODELS = {
     "AURA_FLOW": {
         name: "Aura Flow",
         id: "fofr/aura-flow",
-        version: "2f38ca7d",
+        version: "ae5ab66a7d1ca7ee44cf8c50265d3bafdef23734d03d66063d1c8fcf82f0c17b",
         link: "https://replicate.com/fofr/aura-flow",
         teaser: "https://replicate.delivery/pbxt/FB6BVEL8rUaaKpR6oCfd2wepBKgXyb3ay93qo7WuCequPVPmA/ComfyUI_00001_.webp",
         images: [

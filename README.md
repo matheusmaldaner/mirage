@@ -1,7 +1,7 @@
 # MIRAGE
 
 <p align="center">
-  <img src="images/mirage-readme-banner.svg" alt="MIRAGE banner" width="100%">
+  <img src="images/mirage-readme-banner.png" alt="MIRAGE banner" width="100%">
 </p>
 
 Multi-model Interface for Reviewing & Auditing Generative Text-to-Image AI.
@@ -44,7 +44,7 @@ Set `REPLICATE_API_TOKEN` in a local `.dev.vars` file.
 
 ## How it works
 
-`functions/api/generate.js` accepts POST with `{ model_name, model_version_id, prompt, num, ...params }`. It sends a synchronous Replicate prediction with the `Prefer: wait` header, polls if the request is still running after the initial wait, and returns `{ Status: "Completed", ImageUrls: [...] }` so the frontend code stays simple.
+`functions/api/generate.js` accepts POST with `{ model_name, model_version_id, prompt, num }`. It creates a Replicate prediction (with a short `Prefer: wait` so fast models come back already finished) and returns the prediction's `{ id, status, output }`. If the model is still running, `js/compare.js` polls `functions/api/status.js` (`GET /api/status?id=...`) every couple seconds until it finishes. No single request stays open long enough to hit Cloudflare's edge timeout, so even slow models work.
 
 `js/constants.js` is the model catalog, ported verbatim from the original Mirage. Add or remove models by editing this file. The version hash on each model pins to a specific Replicate version.
 

@@ -63,7 +63,7 @@ Visit the live URL.
 1. Open dev tools > Network tab
 2. Pick 1-2 cheap models (SDXL Lightning 4-Step is fast)
 3. Type a prompt, hit Generate
-4. Watch network: `POST /api/generate` should return 200 with a JSON body containing `ImageUrls: [...]`
+4. Watch network: `POST /api/generate` returns 200 with `{ id, status, output }`. If `status` is not `succeeded` yet, the page polls `GET /api/status?id=...` every couple seconds until it is.
 5. The grid populates with images from `replicate.delivery/...` URLs
 
 If `/api/generate` returns 500:
@@ -88,6 +88,6 @@ Currently private. When ready:
 
 ## Troubleshooting
 
-- 503 on `/api/generate` with `cpu_exceeded`: Replicate model took longer than the Pages Function CPU limit. Pick faster models for the live demo, or upgrade to Pages Functions paid for higher limits.
+- Generation never finishes: the browser polls `GET /api/status?id=...` for up to 6 minutes (`MAX_GENERATION_MS` in `js/compare.js`). Slow batch models like aura-flow at 8 images take ~4 min. If a model routinely exceeds the cap, raise it or drop the model.
 - DNS doesn't resolve for mirage.matheus.wiki: confirm matheus.wiki is on Cloudflare nameservers; otherwise the CNAME route is needed.
 - Generate button does nothing: check browser console for JS errors. Most likely a model version got deprecated on Replicate. Update the `version` hash in `js/constants.js` for that model.

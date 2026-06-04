@@ -5,8 +5,13 @@ import { PORTUGUESE_DESCRIPTIONS } from './translations_pt.js';
 const NUM_IMAGES = 8;
 // max models that can be selected at once
 const MAX_MODELS = 4;
-// endpoint served by functions/api/generate.js when deployed to cloudflare pages
+// endpoints served by functions/api/*.js when deployed to cloudflare pages
 const API_ENDPOINT = '/api/generate';
+const STATUS_ENDPOINT = '/api/status';
+// how often to poll a still-running generation, and how long to wait before giving up
+const POLL_INTERVAL_MS = 2000;
+// generous cap; slow batch models (e.g. aura-flow at 8 images) can run ~4 min, more if cold
+const MAX_GENERATION_MS = 6 * 60 * 1000;
 
 // labels respect the page's lang attribute
 const IS_PT = document.documentElement.lang.startsWith('pt');
@@ -182,6 +187,9 @@ window.generateModels = async function() {
 
     // clear previous results
     document.getElementById('comparison-results').innerHTML = '';
+    // the results wrapper ships hidden (models_display.css sets #model-container display:none); reveal it on generate
+    const resultsSection = document.getElementById('model-container');
+    if (resultsSection) resultsSection.style.display = 'block';
     hideRateBanner();
     modelSelectionEnabled = false;
     setGenerationUiDisabled(true);
@@ -249,8 +257,21 @@ async function generateForModel(model, prompt, order) {
         throw new Error(`api error ${res.status}: ${text}`);
     }
 
-    const data = await res.json();
-    return data.output || data.ImageUrls || [];
+    // /api/generate returns the prediction's current state; poll /api/status until it finishes
+    let state = await res.json();
+    const deadline = Date.now() + MAX_GENERATION_MS;
+    while (state.status === 'starting' || state.status === 'processing') {
+        if (Date.now() > deadline) throw new Error('timed out waiting for generation');
+        await sleep(POLL_INTERVAL_MS);
+        const statusRes = await fetch(`${STATUS_ENDPOINT}?id=${encodeURIComponent(state.id)}`);
+        if (!statusRes.ok) continue; // transient status read failure, keep polling
+        state = await statusRes.json();
+    }
+
+    if (state.status !== 'succeeded') {
+        throw new Error(state.error || `generation ${state.status}`);
+    }
+    return state.output || [];
 }
 
 function displayResult(modelName, images, order) {
@@ -333,6 +354,10 @@ function showRateBanner(limit, retrySeconds) {
 function hideRateBanner() {
     const banner = document.getElementById('rate-limit-banner');
     if (banner) banner.classList.remove('visible');
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function cssSafe(s) {
