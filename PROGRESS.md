@@ -9,8 +9,8 @@
 - **Project**: MIRAGE Standalone
 - **Phase**: Phase 5 - deployed and hardened
 - **Current Task**: live on mirage.matheus.wiki; remaining optional work is Git auto-deploy + flipping the repo public
-- **Last Updated**: 2026-06-03
-- **Tests Passing**: yes (local `wrangler pages dev` + production smoke test on mirage.matheus.wiki)
+- **Last Updated**: 2026-06-04
+- **Tests Passing**: yes (full 30-model sweep: 0 validation errors, 29/30 generate; realvisxl2-lcm is a slow cold-boot)
 
 ---
 
@@ -77,6 +77,7 @@
 - [x] Added prompt-first input path for newer official models that reject legacy params
 - [x] Fixed results never displaying (#model-container display:none was never lifted)
 - [x] Reworked generation to async create + status polling
+- [x] Fixed input 422s: send only { prompt } + each model's correct count field clamped to its real max (num_outputs capped at 4); full 30-model sweep verified
 
 ---
 
@@ -90,6 +91,7 @@
 - Display bug fix - 2026-06-03 - revealed hidden #model-container so results render
 - Async rework - 2026-06-03 - /api/generate + /api/status, frontend polling, removes slow-model timeout
 - Production deploy - 2026-06-03 - direct upload of clean git archive to Pages project mirage, verified live
+- Input/count 422 fix - 2026-06-04 - many models now cap num_outputs at 4 or use different count fields; switched to minimal { prompt } + per-model count, verified across all 30 models, redeployed
 
 ---
 
@@ -103,6 +105,8 @@
 - Prompt-first input path for newer official models - 2026-06-03 - flux/recraft/sd3.5/luma/aura-flow reject scheduler/guidance/steps/num_outputs/negative_prompt; send only params they accept
 - Keep aura-flow uncapped - 2026-06-03 - async handles its long runtime, so no need to cap or drop it
 - Deploy via direct wrangler upload - 2026-06-03 - Pages project is not Git-connected, so push does not auto-deploy; upload a clean git archive to avoid shipping untracked secrets
+- Minimal { prompt } + count input over a fixed param blob - 2026-06-04 - Replicate tightened many model schemas (num_outputs max 4, different count keys, dropped params); sending only prompt + the model's own count field lets each model use its defaults and avoids 422s
+- Request 4 images instead of 8 - 2026-06-04 - Replicate caps most models at 4, so 4 keeps the comparison grid uniform and halves aura-flow runtime
 
 ---
 
@@ -112,6 +116,7 @@
 - Pages Function timeout on slow models - medium - resolved by async create + status polling, no request stays open long - resolved
 - Replicate cost overrun on live demo - medium - per-IP rate limit + documented cap + cost/abuse warning in README - mitigated
 - No auto-deploy - low - Pages project is direct-upload only, so pushes need a manual `wrangler pages deploy` until Git is connected - watching
+- realvisxl2-lcm slow cold-boot - low - creates without error but did not finish within 200s twice; async gives it 6 min, but a cold first user may time out; redundant with other realvisxl variants so a drop candidate - watching
 
 ---
 
@@ -126,3 +131,8 @@
 **Completed**: open-source readiness fixes; repaired 6 dead model versions and their input schemas; fixed the hidden-results display bug; reworked generation to async create + /api/status polling; deployed to production via direct upload and verified mirage.matheus.wiki end-to-end
 **Current State**: live and working on mirage.matheus.wiki, repo still private at fa26420
 **Next Steps**: rotate the Cloudflare API token used for deploy; optionally connect Git integration for auto-deploy; flip repo public when ready
+
+### Session: 2026-06-04
+**Completed**: traced a second 422 class (models now cap num_outputs at 4, use different count keys, or reject sent params); reworked the function to send minimal { prompt } + per-model count; ran a full 30-model sweep (0 validation errors, 29/30 generate); redeployed and verified ssd-1b and stable-diffusion live
+**Current State**: all 30 models validate on production at a3f8737; only realvisxl2-lcm is a slow cold-boot
+**Next Steps**: decide whether to drop realvisxl2-lcm; rotate the Cloudflare token; connect Git for auto-deploy; flip public
