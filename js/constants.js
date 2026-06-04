@@ -228,6 +228,8 @@ export const MODELS = {
             "https://replicate.delivery/pbxt/IUojxc6ARB4hNNVRDn8eLPdh0GrcRi4Gu11ePPevYe8C0BjHB/out-0.png"
         ],
         description: "A variant of RealVisXL V2.0 incorporating LCM LoRA, enabling faster inference with fewer steps without compromising quality.",
+        note: "This model can take a minute or two to warm up on the first run.",
+        notePt: "Este modelo pode levar um ou dois minutos para inicializar na primeira execução.",
         avg_time: "TBD"
     },
     "STICKER_MAKER": {

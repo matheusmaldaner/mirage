@@ -165,6 +165,14 @@ function updateModelHoverInfo(modelKey) {
 
     modelName.textContent = model.name;
     modelDescription.textContent = description || '';
+
+    // optional per-model italic note (e.g. slow-to-warm-up models)
+    const modelNote = document.getElementById('model-note');
+    if (modelNote) {
+        const note = (IS_PT && model.notePt) ? model.notePt : model.note;
+        modelNote.textContent = note || '';
+        modelNote.style.display = note ? 'block' : 'none';
+    }
     modelImage1.src = images[0] || model.teaser || 'images/onboarding-default-mirage-1.png';
     modelImage2.src = images[1] || images[0] || model.teaser || 'images/onboarding-default-mirage-2.png';
     modelImage1.onerror = () => { modelImage1.src = 'images/onboarding-default-mirage-1.png'; };
