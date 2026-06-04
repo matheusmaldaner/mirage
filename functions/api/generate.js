@@ -14,52 +14,24 @@ const REPLICATE_URL = 'https://api.replicate.com/v1/predictions';
 // seconds replicate holds the create request before returning (max 60); fast models finish here
 const CREATE_WAIT_SECONDS = 10;
 
-// per-model parameter overrides ported from the old django mirageFunction.py
-// these win over whatever the client sends so the call actually validates at replicate
-const MODEL_OVERRIDES = {
-  'bytedance/sdxl-lightning-4step': {
-    width: 1024, height: 1024, scheduler: 'K_EULER',
-    guidance_scale: 0, negative_prompt: 'worst quality, low quality',
-    num_inference_steps: 4, max_outputs: 1,
-  },
-  'ai-forever/kandinsky-2.2': {
-    width: 1024, height: 1024, scheduler: 'K_EULER',
-    guidance_scale: 0, negative_prompt: 'worst quality, low quality',
-    num_inference_steps: 20,
-  },
-  'playgroundai/playground-v2-1024px-aesthetic': {
-    width: 1024, height: 1024, scheduler: 'K_EULER_ANCESTRAL',
-    guidance_scale: 3, negative_prompt: 'worst quality, low quality',
-    num_inference_steps: 50, max_outputs: 1,
-  },
-  'lucataco/ssd-1b': {
-    width: 768, height: 768, scheduler: 'K_EULER',
-    guidance_scale: 9, negative_prompt: 'worst quality, low quality',
-    num_inference_steps: 20,
-  },
-  'adirik/realvisxl-v4.0': {
-    width: 768, height: 768, scheduler: 'K_EULER',
-    guidance_scale: 4, negative_prompt: 'worst quality, low quality',
-    num_inference_steps: 25,
-  },
-  'fofr/latent-consistency-model': {
-    width: 768, height: 768, scheduler: 'K_EULER',
-    guidance_scale: 4, negative_prompt: 'worst quality, low quality',
-    num_inference_steps: 25, max_outputs: 1, num_key: 'num_images',
-  },
-};
-
-// newer official replicate models use prompt-first schemas and reject the legacy
-// scheduler/guidance_scale/num_inference_steps/num_outputs/negative_prompt params.
-// `params` is sent verbatim with the prompt; `num_key` is the batch field
-// (null means the model only ever returns a single image).
-const PROMPT_FIRST_MODELS = {
-  'black-forest-labs/flux-1.1-pro': { params: { aspect_ratio: '1:1' }, num_key: null },
-  'recraft-ai/recraft-v3': { params: {}, num_key: null },
-  'stability-ai/stable-diffusion-3.5-large': { params: { aspect_ratio: '1:1' }, num_key: null },
-  'luma/photon': { params: { aspect_ratio: '1:1' }, num_key: null },
-  'luma/photon-flash': { params: { aspect_ratio: '1:1' }, num_key: null },
-  'fofr/aura-flow': { params: {}, num_key: 'number_of_images', max_outputs: 8 },
+// each model is sent only { prompt } plus its own image-count field, clamped to the maximum the
+// pinned model version actually accepts. these were read from each version's replicate input
+// schema (which is immutable per version), so encoding them statically stays correct. everything
+// else uses replicate's per-model defaults, which avoids 422s from params a model does not accept.
+// verified 2026-06-03. models not listed use DEFAULT_COUNT; a null value means the model has no
+// batch field and always returns a single image.
+const DEFAULT_COUNT = { key: 'num_outputs', max: 4 };
+const COUNT_OVERRIDES = {
+  'fofr/latent-consistency-model': { key: 'num_images', max: 8 },
+  'fofr/sticker-maker': { key: 'number_of_images', max: 8 },
+  'fofr/aura-flow': { key: 'number_of_images', max: 8 },
+  'playgroundai/playground-v2-1024px-aesthetic': null,
+  'nvidia/sana': null,
+  'black-forest-labs/flux-1.1-pro': null,
+  'recraft-ai/recraft-v3': null,
+  'stability-ai/stable-diffusion-3.5-large': null,
+  'luma/photon': null,
+  'luma/photon-flash': null,
 };
 
 export async function onRequestPost({ request, env }) {
@@ -88,29 +60,13 @@ export async function onRequestPost({ request, env }) {
 
   const requested = Math.max(1, Math.min(parseInt(num, 10) || 1, 8));
 
-  let input;
-  if (PROMPT_FIRST_MODELS[model_name]) {
-    // prompt-first official model: only send params it actually accepts
-    const cfg = PROMPT_FIRST_MODELS[model_name];
-    input = { prompt, ...cfg.params };
-    if (cfg.num_key) {
-      input[cfg.num_key] = Math.min(requested, cfg.max_outputs || 8);
-    }
-  } else {
-    // legacy stable-diffusion-style model: apply overrides over the shared default
-    const ov = MODEL_OVERRIDES[model_name] || {};
-    const numImages = Math.min(requested, ov.max_outputs || 8);
-    const numKey = ov.num_key || 'num_outputs';
-    input = {
-      prompt,
-      width: ov.width || 768,
-      height: ov.height || 768,
-      scheduler: ov.scheduler || 'K_EULER',
-      guidance_scale: ov.guidance_scale ?? 7.5,
-      num_inference_steps: ov.num_inference_steps || 20,
-      negative_prompt: ov.negative_prompt || '',
-      [numKey]: numImages,
-    };
+  // send only the prompt plus the model's own count field; let replicate default everything else
+  const input = { prompt };
+  const count = Object.prototype.hasOwnProperty.call(COUNT_OVERRIDES, model_name)
+    ? COUNT_OVERRIDES[model_name]
+    : DEFAULT_COUNT;
+  if (count) {
+    input[count.key] = Math.min(requested, count.max);
   }
 
   // create the prediction; prefer a short wait so quick models return already finished

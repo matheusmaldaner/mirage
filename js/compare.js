@@ -1,8 +1,8 @@
 import { MODELS } from './constants.js';
 import { PORTUGUESE_DESCRIPTIONS } from './translations_pt.js';
 
-// number of images to request per model
-const NUM_IMAGES = 8;
+// images to request per model; replicate caps most models at 4, so 4 keeps the grid uniform
+const NUM_IMAGES = 4;
 // max models that can be selected at once
 const MAX_MODELS = 4;
 // endpoints served by functions/api/*.js when deployed to cloudflare pages
