@@ -13,6 +13,12 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: verify SEO files
+        run: |
+          if [ ! -f robots.txt ]; then echo "Missing robots.txt"; exit 1; fi
+          if [ ! -f sitemap.xml ]; then echo "Missing sitemap.xml"; exit 1; fi
+          grep -q "<title>" index.html || { echo "Missing title in index.html"; exit 1; }
+          grep -q "canonical" index.html || { echo "Missing canonical in index.html"; exit 1; }
       - name: deploy to cloudflare pages
         uses: cloudflare/wrangler-action@v3
         with:

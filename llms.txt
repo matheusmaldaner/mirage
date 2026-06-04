@@ -1,0 +1,14 @@
+# MIRAGE: Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI
+
+MIRAGE is an open-source tool for comparing text-to-image AI models side by side. It allows researchers, auditors, and users to evaluate the output of multiple models (e.g., Stable Diffusion, SDXL, Kandinsky, Playground) against a single prompt.
+
+## Project Details
+- Website: https://mirage.matheus.wiki/
+- Compare Models (English): https://mirage.matheus.wiki/compare.html
+- Compare Models (Portuguese): https://mirage.matheus.wiki/compare-pt.html
+- Instructions (English): https://mirage.matheus.wiki/instructions.html
+- Instructions (Portuguese): https://mirage.matheus.wiki/instructions-pt.html
+- Source Code: https://github.com/matheusmaldaner/mirage
+- Papers:
+  - CI 2025: https://arxiv.org/abs/2511.21547
+  - HCOMP 2024: https://arxiv.org/abs/2503.19252
