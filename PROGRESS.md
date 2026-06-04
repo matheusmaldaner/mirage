@@ -16,7 +16,7 @@
 
 ## Service Status
 
-- Cloudflare Pages: deployed via direct upload (project `mirage`, Git not connected), live at mirage.matheus.wiki and mirage-56j.pages.dev
+- Cloudflare Pages: live at mirage.matheus.wiki and mirage-56j.pages.dev (project `mirage`, direct-upload); auto-deploys on push to main via GitHub Actions
 - Replicate API: token configured on the Pages project, production generations succeed
 - Target domain mirage.matheus.wiki: live with valid SSL
 - Rate limiting: RATE_LIMIT_KV bound in production, 20/hr per IP confirmed firing
@@ -65,7 +65,7 @@
 - [x] Replicate token added as env var
 - [x] mirage.matheus.wiki DNS pointed
 - [x] First production generation
-- [ ] Git integration connected for auto-deploy on push (dashboard step)
+- [x] Auto-deploy on push wired via GitHub Actions (.github/workflows/deploy.yml runs wrangler pages deploy)
 - [ ] Repo flipped to public (when ready)
 
 ### Phase 5: Open-source readiness and fixes
@@ -92,6 +92,8 @@
 - Async rework - 2026-06-03 - /api/generate + /api/status, frontend polling, removes slow-model timeout
 - Production deploy - 2026-06-03 - direct upload of clean git archive to Pages project mirage, verified live
 - Input/count 422 fix - 2026-06-04 - many models now cap num_outputs at 4 or use different count fields; switched to minimal { prompt } + per-model count, verified across all 30 models, redeployed
+- realvisxl2-lcm warm-up note - 2026-06-04 - added an italic EN/PT hover note instead of dropping the slow model
+- Auto-deploy via GitHub Actions - 2026-06-04 - .github/workflows/deploy.yml deploys to Pages on push to main; secrets CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID set
 
 ---
 
@@ -115,7 +117,8 @@
 - Replicate model versions deprecate - medium - materialized: 6 official models had dead version pins, fixed 2026-06-03; recheck periodically - mitigated
 - Pages Function timeout on slow models - medium - resolved by async create + status polling, no request stays open long - resolved
 - Replicate cost overrun on live demo - medium - per-IP rate limit + documented cap + cost/abuse warning in README - mitigated
-- No auto-deploy - low - Pages project is direct-upload only, so pushes need a manual `wrangler pages deploy` until Git is connected - watching
+- No auto-deploy - low - resolved 2026-06-04 via GitHub Actions (.github/workflows/deploy.yml); push to main now deploys automatically - resolved
+- Cloudflare token rotation breaks CI - low - the deploy token is also the CLOUDFLARE_API_TOKEN repo secret; after rotating, update the secret with `gh secret set CLOUDFLARE_API_TOKEN` or auto-deploy fails - watching
 - realvisxl2-lcm slow cold-boot - low - creates without error but did not finish within 200s twice; async gives it 6 min, but a cold first user may time out; redundant with other realvisxl variants so a drop candidate - watching
 
 ---
