@@ -65,6 +65,10 @@
             font-family: 'Montserrat', sans-serif; 
             color: var(--text-color); 
             overflow-x: hidden;
+            padding-top: 70px;
+        }
+        @media (max-width: 768px) {
+            body { padding-top: 60px; }
         }
         #prompt-submission-container,
         #form-container,
@@ -251,26 +255,19 @@
 </head>
 
 <body>
-    <div class="container-fluid" id="header">
-        <div class="row align-items-center" style="padding-top: 1%;">
-            <div class="col-12 col-md-2 d-flex" style="padding-left: 30px;">
-                <p id="logo-WeAudit" onclick="window.location.href='/'"> Mirage </p>
-            </div>
-            <div class="col-12 col-md-10 d-flex justify-content-end align-items-center flex-wrap" style="padding-right: 30px;">
-                <a href="https://github.com/matheusmaldaner/mirage" target="_blank"
-                   style="color: var(--primary-color); text-decoration: none; margin-right: 1rem; font-weight: 500;">
-                    <i class="fab fa-github"></i> Source
+    <header id="header">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">MIRAGE</a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="compare.html" class="nav-link active">Compare</a>
+                <a href="instructions.html" class="nav-link">Instructions</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank" class="nav-link">
+                    <i class="fab fa-github"></i>
                 </a>
-                <a href="https://arxiv.org/abs/2511.21547" target="_blank"
-                   style="color: var(--primary-color); text-decoration: none; font-weight: 500;">
-                    <i class="fas fa-file-pdf"></i> Paper
-                </a>
-                <a href="instructions.html" title="Instructions" style="color: var(--primary-color); margin-left: 1rem;">
-                    <i class="far fa-question-circle" style="font-size: 25px;"></i>
-                </a>
-            </div>
+            </nav>
         </div>
-    </div>
+    </header>
 
     <div id="rate-limit-banner" class="rate-limit-banner">
         <i class="fas fa-info-circle"></i>

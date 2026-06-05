@@ -97,6 +97,11 @@
             color: var(--text-color);
             display: flex;
             flex-direction: column;
+            padding-top: 70px;
+            overflow-x: hidden;
+        }
+        @media (max-width: 768px) {
+            body { padding-top: 60px; }
         }
         .authors-main {
             flex: 1;
@@ -186,6 +191,20 @@
     </style>
 </head>
 <body>
+    <header id="header">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">MIRAGE</a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="compare.html" class="nav-link">Compare</a>
+                <a href="instructions.html" class="nav-link">Instructions</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank" class="nav-link">
+                    <i class="fab fa-github"></i>
+                </a>
+            </nav>
+        </div>
+    </header>
+
     <main class="authors-main">
         <h1 class="authors-title">Authors</h1>
         <p class="authors-subtitle">

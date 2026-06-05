@@ -76,6 +76,10 @@
             position: relative;
             overflow-x: hidden;
             font-size: 15px;
+            padding-top: 70px;
+        }
+        @media (max-width: 768px) {
+            body { padding-top: 60px; }
         }
         .landing-container {
             max-width: 1120px;
@@ -444,6 +448,20 @@
     </style>
 </head>
 <body>
+    <header id="header">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">MIRAGE</a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="compare.html" class="nav-link">Compare</a>
+                <a href="instructions.html" class="nav-link">Instructions</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank" class="nav-link">
+                    <i class="fab fa-github"></i>
+                </a>
+            </nav>
+        </div>
+    </header>
+
     <div class="decorative-circle circle-1"></div>
     <div class="decorative-circle circle-2"></div>
 

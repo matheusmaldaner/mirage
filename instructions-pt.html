@@ -124,6 +124,10 @@
             position: relative;
             font-size: 15px;
             overflow-x: hidden;
+            padding-top: 70px;
+        }
+        @media (max-width: 768px) {
+            body { padding-top: 60px; }
         }
 
         .main-container {
@@ -334,6 +338,20 @@
 </head>
 
 <body>
+    <header id="header">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">MIRAGE</a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Início</a>
+                <a href="compare-pt.html" class="nav-link">Comparar</a>
+                <a href="instructions-pt.html" class="nav-link active">Instruções</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank" class="nav-link">
+                    <i class="fab fa-github"></i>
+                </a>
+            </nav>
+        </div>
+    </header>
+
     <div class="content-wrapper">
         <div class="decorative-circle circle-1"></div>
         <div class="decorative-circle circle-2"></div>
