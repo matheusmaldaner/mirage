@@ -22,7 +22,7 @@ No accounts, no database, no forum. The browser is the only state.
 
 1. Fork this repo
 2. In Cloudflare dashboard: Workers & Pages > Create > Pages > Connect to Git, pick your fork
-3. Build settings: framework preset = None, build command = empty, build output directory = `/`
+3. Build settings: framework preset = None, build command = empty, build output directory = `public`
 4. Environment variables (Production and Preview):
    - `REPLICATE_API_TOKEN` = your token
    - `RATE_LIMIT_PER_HOUR` = optional integer, default 20
