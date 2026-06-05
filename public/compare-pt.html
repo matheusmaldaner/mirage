@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MIRAGE - Compare Models</title>
-    <meta name="description" content="Select and compare text-to-image AI models side by side with MIRAGE.">
-    <link rel="canonical" href="https://mirage.matheus.wiki/compare.html">
-    <meta property="og:title" content="MIRAGE - Compare Models">
-    <meta property="og:description" content="Select and compare text-to-image AI models side by side with MIRAGE.">
-    <meta property="og:url" content="https://mirage.matheus.wiki/compare.html">
+    <title>MIRAGE - Comparar Modelos</title>
+    <meta name="description" content="Selecione e compare modelos de IA de texto-para-imagem lado a lado com o MIRAGE.">
+    <link rel="canonical" href="https://mirage.matheus.wiki/compare-pt.html">
+    <meta property="og:title" content="MIRAGE - Comparar Modelos">
+    <meta property="og:description" content="Selecione e compare modelos de IA de texto-para-imagem lado a lado com o MIRAGE.">
+    <meta property="og:url" content="https://mirage.matheus.wiki/compare-pt.html">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -19,7 +19,7 @@
       "name": "MIRAGE",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Web",
-      "description": "Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI. Compare models side by side.",
+      "description": "Interface multi-modelo para revisão e auditoria de IA generativa de texto para imagem. Compare modelos lado a lado.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -61,14 +61,17 @@
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            color: var(--text-color); 
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
             overflow-x: hidden;
             padding-top: 70px;
+            position: relative;
         }
         @media (max-width: 768px) {
             body { padding-top: 60px; }
+            #input-and-questions-wrapper { flex-direction: column; }
+            #form-container { width: 100%; min-height: auto; }
         }
         #prompt-submission-container,
         #form-container,
@@ -259,9 +262,9 @@
         <div class="nav-container">
             <a href="/" class="nav-brand">MIRAGE</a>
             <nav class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="compare.html" class="nav-link active">Compare</a>
-                <a href="instructions.html" class="nav-link">Instructions</a>
+                <a href="/" class="nav-link">Início</a>
+                <a href="compare-pt.html" class="nav-link active">Comparar</a>
+                <a href="instructions-pt.html" class="nav-link">Instruções</a>
                 <a href="https://github.com/matheusmaldaner/mirage" target="_blank" class="nav-link">
                     <i class="fab fa-github"></i>
                 </a>
@@ -281,30 +284,30 @@
         <div id="image-preloader" style="display:none; visibility:hidden; height:0; width:0; overflow:hidden;"></div>
 
         <div id="prompt-submission-container">
-            <h5 class="mb-4" style="color: var(--primary-color); font-weight: 600;">Image Generator</h5>
+            <h5 class="mb-4" style="color: var(--primary-color); font-weight: 600;">Gerador de Imagens</h5>
 
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Enter your prompt here" id="prompt-input">
+                <input type="text" class="form-control" placeholder="Digite seu prompt aqui" id="prompt-input">
                 <button class="btn btn-success" id="generate-button" onclick="generateModels()">
-                    <i class="fas fa-magic me-2"></i>Generate
+                    <i class="fas fa-magic me-2"></i>Gerar
                 </button>
             </div>
 
             <div id="model-selection-wrapper">
-                <h6 class="mt-4 mb-3" style="color: var(--primary-color); font-weight: 500;">Select models (we recommend 4)</h6>
+                <h6 class="mt-4 mb-3" style="color: var(--primary-color); font-weight: 500;">Selecione os modelos (recomendamos 4)</h6>
                 <div id="model-selection-container" class="d-flex flex-wrap mb-3"></div>
             </div>
 
             <div class="form-check form-switch mb-3">
                 <input type="checkbox" class="form-check-input" id="waitForAllModelsCheckbox">
                 <label class="form-check-label" for="waitForAllModelsCheckbox">
-                    Wait for all models to finish before displaying
+                    Esperar todos os modelos terminarem antes de exibir
                 </label>
             </div>
 
             <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-success" id="toggle-models-button" onclick="toggleModels()">
-                    <i class="fas fa-layer-group me-2"></i>Show Models
+                    <i class="fas fa-layer-group me-2"></i>Mostrar Modelos
                 </button>
             </div>
         </div>
@@ -314,10 +317,10 @@
                 <h4 id="model-name" style="color: var(--primary-color); font-weight: 600;"></h4>
                 <p id="model-description"></p>
                 <p id="model-note" style="display: none; font-style: italic; color: #888; font-size: 0.85rem;"></p>
-                <h6 style="color: var(--primary-color); font-weight: 500;">Image Examples:</h6>
+                <h6 style="color: var(--primary-color); font-weight: 500;">Exemplos de Imagens:</h6>
                 <div id="model-images">
-                    <img id="model-image-1" src="images/onboarding-default-mirage-1.png" alt="Placeholder 1" class="model-placeholder-image" loading="eager" fetchpriority="high" decoding="async">
-                    <img id="model-image-2" src="images/onboarding-default-mirage-2.png" alt="Placeholder 2" class="model-placeholder-image" loading="eager" fetchpriority="high" decoding="async">
+                    <img id="model-image-1" src="images/onboarding-default-mirage-1.png" alt="Exemplo 1" class="model-placeholder-image" loading="eager" fetchpriority="high" decoding="async">
+                    <img id="model-image-2" src="images/onboarding-default-mirage-2.png" alt="Exemplo 2" class="model-placeholder-image" loading="eager" fetchpriority="high" decoding="async">
                 </div>
                 <a id="model-info-link" href="#" target="_blank" class="info-icon">
                     <i class="fas fa-info-circle"></i>
@@ -327,7 +330,7 @@
     </div>
 
     <div id="model-container">
-        <h5 class="mb-4" style="color: var(--primary-color); font-weight: 600;">Generation Results</h5>
+        <h5 class="mb-4" style="color: var(--primary-color); font-weight: 600;">Resultados da Geração</h5>
         <div class="flex-box rounded-borders" id="comparison-results"></div>
     </div>
 
@@ -335,12 +338,12 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: var(--primary-color); color: white;">
-                    <h5 class="modal-title">Image Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    <h5 class="modal-title">Pré-visualização da Imagem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"
                             style="background-color: white;"></button>
                 </div>
                 <div class="modal-body">
-                    <img class="modal-content" id="pop-up-image" style="width: 100%; height: auto;" alt="Enlarged model output preview">
+                    <img class="modal-content" id="pop-up-image" style="width: 100%; height: auto;" alt="Pré-visualização ampliada do resultado do modelo">
                 </div>
             </div>
         </div>
@@ -348,48 +351,48 @@
 
     <div id="loading-animation" class="loading-overlay hidden">
         <div class="loader"></div>
-        <p style="margin-top: 20px; font-weight: 500; color: var(--primary-color);">Loading Images...</p>
+        <p style="margin-top: 20px; font-weight: 500; color: var(--primary-color);">Carregando Imagens...</p>
     </div>
 
     <div class="modal fade" id="tutorialModal" tabindex="-1" aria-labelledby="tutorialModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tutorialModalLabel">Welcome to MIRAGE - Quick Tutorial</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: white;"></button>
+                    <h5 class="modal-title" id="tutorialModalLabel">Bem-vindo ao MIRAGE - Tutorial Rápido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" style="background-color: white;"></button>
                 </div>
                 <div class="modal-body">
                     <div class="step-item">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <div class="step-title">Select Models</div>
-                            <p>Click the "Show Models" button and select 4 AI models to compare. You can hover over each model to see examples of their images.</p>
+                            <div class="step-title">Selecione Modelos</div>
+                            <p>Clique em "Mostrar Modelos" e selecione 4 modelos de IA para comparar. Passe o mouse sobre cada modelo para ver exemplos de imagens.</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <div class="step-title">Enter Your Prompt</div>
-                            <p>Insert a descriptive prompt in the text field to guide the models in generating images.</p>
+                            <div class="step-title">Digite Seu Prompt</div>
+                            <p>Insira uma descrição no campo de texto para orientar os modelos na geração de imagens.</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <div class="step-title">Generate Images</div>
-                            <p>Click the "Generate" button and wait while the models create their images.</p>
+                            <div class="step-title">Gere Imagens</div>
+                            <p>Clique no botão "Gerar" e aguarde enquanto os modelos criam suas imagens.</p>
                         </div>
                     </div>
                     <div class="step-item">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <div class="step-title">Review Outputs</div>
-                            <p>Compare the images created by different models and look for recurring patterns.</p>
+                            <div class="step-title">Revise os Resultados</div>
+                            <p>Compare as imagens criadas por diferentes modelos e procure padrões recorrentes.</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Got it, Let's Start!</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Entendi, Vamos Começar!</button>
                 </div>
             </div>
         </div>
@@ -401,11 +404,11 @@
                 &copy; 2024 MIRAGE | Carnegie Mellon University
             </div>
             <div>
-                <a href="/">Home</a>
-                <a href="compare.html">Compare</a>
-                <a href="instructions.html">Instructions</a>
-                <a href="authors.html">Authors</a>
-                <a href="https://github.com/matheusmaldaner/mirage" target="_blank">Source</a>
+                <a href="/">Início</a>
+                <a href="compare-pt.html">Comparar</a>
+                <a href="instructions-pt.html">Instruções</a>
+                <a href="authors-pt.html">Autores</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank">Código</a>
             </div>
             <div>
                 <a href="compare.html">English</a>

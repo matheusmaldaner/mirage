@@ -1,7 +1,7 @@
 # MIRAGE
 
 <p align="center">
-  <img src="images/mirage-readme-banner.png" alt="MIRAGE banner" width="100%">
+  <img src="public/images/mirage-readme-banner.png" alt="MIRAGE banner" width="100%">
 </p>
 
 Multi-model Interface for Reviewing & Auditing Generative Text-to-Image AI.

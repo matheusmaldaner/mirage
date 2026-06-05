@@ -15,13 +15,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: verify SEO files
         run: |
-          if [ ! -f robots.txt ]; then echo "Missing robots.txt"; exit 1; fi
-          if [ ! -f sitemap.xml ]; then echo "Missing sitemap.xml"; exit 1; fi
-          grep -q "<title>" index.html || { echo "Missing title in index.html"; exit 1; }
-          grep -q "canonical" index.html || { echo "Missing canonical in index.html"; exit 1; }
+          if [ ! -f public/robots.txt ]; then echo "Missing public/robots.txt"; exit 1; fi
+          if [ ! -f public/sitemap.xml ]; then echo "Missing public/sitemap.xml"; exit 1; fi
+          grep -q "<title>" public/index.html || { echo "Missing title in public/index.html"; exit 1; }
+          grep -q "canonical" public/index.html || { echo "Missing canonical in public/index.html"; exit 1; }
       - name: deploy to cloudflare pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=mirage --branch=main
+          command: pages deploy public --project-name=mirage --branch=main

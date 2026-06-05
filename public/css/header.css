@@ -15,6 +15,11 @@
 	--grey-5: #F8F9F8;
 }
 
+/* clip decorative circles and any stray wide elements so mobile has no sideways scroll */
+html, body {
+    overflow-x: hidden;
+}
+
 #header {
     background-color: white;
     border-bottom: 1px solid var(--grey-4);
@@ -84,6 +89,13 @@
     .nav-brand {
         font-size: 1.25rem;
     }
+}
+
+@media (max-width: 480px) {
+    #header { padding: 0 0.6rem; }
+    .nav-links { gap: 0.6rem; }
+    .nav-link { font-size: 0.78rem; }
+    .nav-brand { font-size: 1.05rem; }
 }
 
 #logo-WeAudit {

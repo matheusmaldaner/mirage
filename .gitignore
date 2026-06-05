@@ -27,7 +27,13 @@ dist/
 audit/
 local/
 
+# playwright mobile-audit scripts and screenshots, kept locally but not published
+mobile_audit/
+mobile_audit_v2/
+mobile_audit.js
+mobile_audit_v2.js
+
 # orphaned teaser images copied from upstream, not referenced by any page
-images/model-teasers/model-teaser-16.webp
-images/model-teasers/model-teaser-17.jpg
-images/model-teasers/model-teaser-18.jpg
+public/images/model-teasers/model-teaser-16.webp
+public/images/model-teasers/model-teaser-17.jpg
+public/images/model-teasers/model-teaser-18.jpg

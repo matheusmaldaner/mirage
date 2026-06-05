@@ -18,7 +18,7 @@ This is the exact click path to get mirage.matheus.wiki live on Cloudflare Pages
    - Production branch: `main`
    - Framework preset: None
    - Build command: (leave empty)
-   - Build output directory: `/` (or empty)
+   - Build output directory: `public`
 5. Save and Deploy.
 
 First deploy takes about 1 minute. You'll get a `https://mirage.pages.dev` URL.
@@ -71,14 +71,6 @@ If `/api/generate` returns 500:
 - Most common cause: `REPLICATE_API_TOKEN` not set or has typo
 
 If 429: rate limit hit. Check KV namespace data or raise `RATE_LIMIT_PER_HOUR`.
-
-## Step 6: Make repo public (when you're ready to publish)
-
-Currently private. When ready:
-
-1. github.com/matheusmaldaner/mirage > Settings > Danger Zone > Change visibility > Make public
-2. Cloudflare connection survives the visibility flip.
-3. Update README's "live demo" link if pointing somewhere else.
 
 ## Cost ceiling
 
