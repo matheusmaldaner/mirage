@@ -169,6 +169,16 @@
             max-width: 1120px;
         }
 
+        .steps-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1120px;
+        }
+
+        .steps-next-button {
+            display: none;
+        }
+
         .step-card {
             background-color: white;
             border-radius: var(--border-radius);
@@ -263,16 +273,68 @@
                 width: 100%;
                 padding: 1rem;
             }
+            .steps-carousel {
+                max-width: none;
+                margin: 0 -1rem 1.25rem;
+                width: calc(100% + 2rem);
+            }
             .steps-container {
-                grid-template-columns: 1fr;
-                max-width: 400px;
+                display: flex;
+                gap: 1rem;
+                margin: 0;
+                max-width: none;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                padding: 0.25rem 3.25rem 1rem 1rem;
+                scroll-padding-inline: 1rem;
+                scroll-snap-type: x mandatory;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .steps-container::-webkit-scrollbar {
+                display: none;
             }
             .step-card {
-                width: 100%;
-                max-width: 400px;
+                flex: 0 0 min(82vw, 360px);
+                max-width: min(82vw, 360px);
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
+            }
+            .step-card:hover {
+                transform: none;
             }
             .step-image {
                 height: 200px;
+            }
+            .steps-next-button {
+                align-items: center;
+                background: var(--primary-color);
+                border: 1px solid rgba(255, 255, 255, 0.35);
+                border-radius: 50%;
+                box-shadow: 0 8px 24px rgba(20, 42, 33, 0.25);
+                color: white;
+                cursor: pointer;
+                display: flex;
+                font-size: 1.25rem;
+                height: 44px;
+                justify-content: center;
+                line-height: 1;
+                padding: 0;
+                position: absolute;
+                right: 0.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: var(--transition);
+                width: 44px;
+                z-index: 3;
+            }
+            .steps-next-button:hover,
+            .steps-next-button:focus {
+                background: #084f37;
+                outline: none;
+            }
+            .steps-next-button[hidden] {
+                display: none;
             }
         }
 
@@ -359,33 +421,38 @@
                 <p style="margin-bottom: 0">Encontre padrões e detecte inconsistências em imagens geradas por IA a partir de múltiplos modelos de texto-para-imagem.</p>
             </div>
 
-            <div class="steps-container">
-                <div class="step-card animate__animated animate__fadeInUp">
-                    <div class="step-number">1</div>
-                    <img src="images/mirage-default-gif-1.gif" alt="Passo 1" class="step-image">
-                    <div class="step-content">
-                        <h4 class="step-title">Selecionar Modelos</h4>
-                        <p class="step-description">Selecione até 4 modelos diferentes de IA de Texto-Para-Imagem da lista disponível.</p>
+            <div class="steps-carousel" data-step-carousel>
+                <div class="steps-container">
+                    <div class="step-card animate__animated animate__fadeInUp">
+                        <div class="step-number">1</div>
+                        <img src="images/mirage-default-gif-1.gif" alt="Passo 1" class="step-image">
+                        <div class="step-content">
+                            <h4 class="step-title">Selecionar Modelos</h4>
+                            <p class="step-description">Selecione até 4 modelos diferentes de IA de Texto-Para-Imagem da lista disponível.</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
-                    <div class="step-number">2</div>
-                    <img src="images/mirage-default-gif-2-faster.gif" alt="Passo 2" class="step-image">
-                    <div class="step-content">
-                        <h4 class="step-title">Escreva Seu Prompt</h4>
-                        <p class="step-description">Escreva seu prompt, clique em 'Gerar' e aguarde as imagens aparecerem na tela.</p>
+                    <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                        <div class="step-number">2</div>
+                        <img src="images/mirage-default-gif-2-faster.gif" alt="Passo 2" class="step-image">
+                        <div class="step-content">
+                            <h4 class="step-title">Escreva Seu Prompt</h4>
+                            <p class="step-description">Escreva seu prompt, clique em 'Gerar' e aguarde as imagens aparecerem na tela.</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
-                    <div class="step-number">3</div>
-                    <img src="images/mirage-default-gif-3.gif" alt="Passo 3" class="step-image">
-                    <div class="step-content">
-                        <h4 class="step-title">Observe os Resultados</h4>
-                        <p class="step-description">Selecione quais modelos corresponderam às suas expectativas iniciais.</p>
+                    <div class="step-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                        <div class="step-number">3</div>
+                        <img src="images/mirage-default-gif-3.gif" alt="Passo 3" class="step-image">
+                        <div class="step-content">
+                            <h4 class="step-title">Observe os Resultados</h4>
+                            <p class="step-description">Selecione quais modelos corresponderam às suas expectativas iniciais.</p>
+                        </div>
                     </div>
                 </div>
+                <button type="button" class="steps-next-button" aria-label="Próximo passo">
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </div>
 
             <div class="button-container">
@@ -425,6 +492,32 @@
             animateElements.forEach(element => {
                 element.style.opacity = '1';
             });
+
+            const carousel = document.querySelector('[data-step-carousel]');
+            const track = carousel?.querySelector('.steps-container');
+            const nextButton = carousel?.querySelector('.steps-next-button');
+            if (!carousel || !track || !nextButton) return;
+
+            const mobileQuery = window.matchMedia('(max-width: 767px)');
+            const getStepDistance = () => {
+                const firstCard = track.querySelector('.step-card');
+                if (!firstCard) return track.clientWidth;
+                const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+                return firstCard.getBoundingClientRect().width + gap;
+            };
+            const updateNextButton = () => {
+                const cards = track.querySelectorAll('.step-card');
+                const stepDistance = getStepDistance();
+                const activeIndex = stepDistance ? Math.round(track.scrollLeft / stepDistance) : 0;
+                const atEnd = activeIndex >= cards.length - 1;
+                nextButton.hidden = !mobileQuery.matches || atEnd;
+            };
+            nextButton.addEventListener('click', () => {
+                track.scrollBy({ left: getStepDistance(), behavior: 'smooth' });
+            });
+            track.addEventListener('scroll', updateNextButton, { passive: true });
+            window.addEventListener('resize', updateNextButton);
+            updateNextButton();
         });
     </script>
 </body>
