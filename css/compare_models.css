@@ -27,22 +27,52 @@ body, img {
   border: 1px solid #ddd;
 }
 
-/* Custom width for the input group */
-.input-group {
-  width: calc(60% - 25px); /* Full width minus padding */
+#prompt-submission-container .input-group {
+    width: 100%;
 }
 
-.generate-button-container {
-  display: flex;
-  justify-content: flex-end;
+@media (max-width: 991px) {
+    #prompt-submission-container, 
+    #form-container {
+        width: calc(100% - 3rem) !important;
+        margin: 1.5rem !important;
+    }
+    
+    #prompt-submission-container {
+        padding: 1rem;
+    }
 }
 
-/* Styles for the parent container of the button */
-.button-container {
-  display: flex;
-  justify-content: flex-end; /* Aligns the button to the right */
-}
+@media (max-width: 768px) {
+    #prompt-submission-container {
+        margin: 1rem !important;
+        width: calc(100% - 2rem) !important;
+    }
+    
+    .input-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .input-group > * {
+        width: 100% !important;
+        border-radius: var(--border-radius) !important;
+    }
 
+    form {
+        flex-direction: column;
+    }
+    
+    form input {
+        width: 100%;
+        border-radius: 8px 8px 0 0;
+    }
+    
+    .button-search {
+        width: 100%;
+        border-radius: 0 0 8px 8px;
+    }
+}
 
 /* ----------------- */
 /*   Loading Button  */
