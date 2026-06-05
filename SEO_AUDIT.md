@@ -109,7 +109,7 @@ When running this audit against a project:
 
 - [x] Add structured data — Organization/WebSite on root; SoftwareApplication on compare; HowTo and FAQPage on instructions.
 - [x] Add security and cache headers — `_headers` file created for Cloudflare Pages (CSP, HSTS, caching).
-- [ ] Add GSC and Bing verification — Verify ownership via Cloudflare DNS or file upload.
+- [x] Add GSC and Bing verification — Completed via Domain DNS verification.
 - [ ] Add consent-aware analytics — Track page views, generation events, and outbound clicks (e.g., paper links).
 
 ### P2 — Growth Experiments
