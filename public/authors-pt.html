@@ -75,12 +75,12 @@
 
     <style>
         :root {
-            --primary-color: #10724f;
-            --accent-color: #24b47e;
-            --text-color: #333;
-            --light-text: #666;
-            --border-radius: 12px;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --primary-color: #0b6043;
+            --accent-color: #137752;
+            --text-color: #24302b;
+            --light-text: #4f5c56;
+            --border-radius: 8px;
+            --shadow: 0 4px 14px rgba(20, 42, 33, 0.1);
             --transition: all 0.3s ease;
         }
         * { box-sizing: border-box; }
@@ -94,6 +94,7 @@
             flex-direction: column;
             padding-top: 70px;
             overflow-x: hidden;
+            font-size: 16px;
         }
         @media (max-width: 768px) {
             body { padding-top: 60px; }
@@ -101,41 +102,43 @@
         .authors-main {
             flex: 1;
             width: 100%;
-            max-width: 1080px;
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 3rem 1.5rem 2rem;
+            padding: 2.75rem 1.5rem 2rem;
             text-align: center;
         }
         .authors-title {
-            font-size: 2.5rem;
+            font-size: clamp(2.15rem, 4vw, 2.75rem);
             font-weight: 700;
             color: var(--primary-color);
-            margin: 0 0 0.5rem;
+            margin: 0 0 0.75rem;
+            line-height: 1.1;
         }
         .authors-subtitle {
             color: var(--light-text);
             font-size: 1rem;
-            max-width: 640px;
-            margin: 0 auto 2.5rem;
+            max-width: 680px;
+            margin: 0 auto 2.25rem;
             line-height: 1.6;
         }
         .authors-subtitle a { color: var(--primary-color); text-decoration: none; font-weight: 500; }
         .authors-subtitle a:hover { text-decoration: underline; }
         .authors-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
             margin-bottom: 2rem;
         }
         .author-card {
             background: #fff;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 1.75rem 1.25rem;
+            padding: 1.5rem 1.25rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: var(--transition);
+            min-height: 288px;
         }
         .author-card:hover {
             transform: translateY(-5px);
@@ -156,9 +159,9 @@
             margin: 0 0 0.35rem;
         }
         .author-affiliation {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--light-text);
-            line-height: 1.45;
+            line-height: 1.5;
             margin: 0 0 0.9rem;
             flex: 1;
         }
@@ -173,7 +176,9 @@
         }
         .author-links a:hover { color: var(--accent-color); transform: scale(1.15); }
         .authors-back {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
             margin-top: 1rem;
             color: var(--primary-color);
             text-decoration: none;
@@ -181,7 +186,9 @@
         }
         .authors-back:hover { text-decoration: underline; }
         @media (max-width: 600px) {
-            .authors-title { font-size: 2rem; }
+            .authors-main { padding: 2rem 1rem 1.5rem; }
+            .authors-grid { grid-template-columns: 1fr; }
+            .author-card { min-height: 0; }
         }
     </style>
 </head>

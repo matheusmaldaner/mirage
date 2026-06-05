@@ -97,16 +97,16 @@
 
     <style>
         :root {
-            --primary-color: #10724f;
+            --primary-color: #0b6043;
             --secondary-color: #f8f9fa;
-            --text-color: #333;
-            --light-text: #666;
-            --accent-color: #24b47e;
+            --text-color: #24302b;
+            --light-text: #4f5c56;
+            --accent-color: #137752;
             --border-radius: 8px;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 14px rgba(20, 42, 33, 0.1);
             --transition: all 0.3s ease;
-            --card-width: 380px;
-            --card-gap: 2rem;
+            --card-width: 360px;
+            --card-gap: 1.25rem;
         }
 
         html, body {
@@ -122,7 +122,7 @@
             flex-direction: column;
             color: var(--text-color);
             position: relative;
-            font-size: 15px;
+            font-size: 16px;
             overflow-x: hidden;
             padding-top: 70px;
         }
@@ -131,9 +131,9 @@
         }
 
         .main-container {
-            max-width: 100%;
+            max-width: 1120px;
             width: 100%;
-            padding: 2rem 2rem 0;
+            padding: 2.25rem 1.5rem 0;
             box-sizing: border-box;
             margin: 0 auto;
             display: flex;
@@ -144,12 +144,13 @@
         .study-info {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 1.25rem;
-            margin: 0 auto 2rem;
+            padding: 1.35rem 1.5rem;
+            margin: 0 auto 1.5rem;
             box-shadow: var(--shadow);
             border-left: 4px solid var(--accent-color);
-            width: calc(3 * var(--card-width) + 2 * var(--card-gap));
-            max-width: 1260px;
+            width: 100%;
+            max-width: 1120px;
+            line-height: 1.6;
         }
 
         .study-info-title {
@@ -160,20 +161,19 @@
         }
 
         .steps-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: var(--card-gap);
-            margin: 0 0 1.5rem 0;
+            margin: 0 0 1.25rem 0;
             width: 100%;
-            max-width: 1260px;
+            max-width: 1120px;
         }
 
         .step-card {
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            width: var(--card-width);
+            width: 100%;
             overflow: hidden;
             transition: var(--transition);
             position: relative;
@@ -204,13 +204,13 @@
 
         .step-image {
             width: 100%;
-            height: 230px;
+            height: clamp(150px, 18vw, 220px);
             object-fit: cover;
             border-bottom: 1px solid #eee;
         }
 
         .step-content {
-            padding: 1.25rem 1rem;
+            padding: 1.1rem 1rem;
             text-align: center;
         }
 
@@ -218,19 +218,19 @@
             color: var(--primary-color);
             font-weight: 600;
             margin-bottom: 0.5rem;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .step-description {
             color: var(--light-text);
-            font-size: 1rem;
-            line-height: 1.4;
+            font-size: 0.95rem;
+            line-height: 1.5;
             margin-bottom: 0;
         }
 
         .button-container {
             width: 100%;
-            max-width: 1260px;
+            max-width: 1120px;
             text-align: center;
         }
 
@@ -238,10 +238,10 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.8rem 2.5rem;
+            padding: 0.85rem 2.25rem;
             border-radius: var(--border-radius);
             font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             display: inline-block;
@@ -255,19 +255,17 @@
             color: white;
         }
 
-        @media (max-width: 1260px) {
-            .study-info {
-                width: calc(100% - 2rem);
-            }
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 767px) {
             .main-container {
-                padding: 1rem 1rem 0;
+                padding: 1.25rem 1rem 0;
             }
             .study-info {
                 width: 100%;
                 padding: 1rem;
+            }
+            .steps-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
             }
             .step-card {
                 width: 100%;
@@ -285,7 +283,9 @@
             margin-top: 1rem;
             margin-bottom: 0;
             width: 100%;
-            max-width: 1260px;
+            max-width: 1120px;
+            color: var(--light-text);
+            line-height: 1.5;
         }
 
         .researcher-info a {
@@ -299,11 +299,7 @@
         }
 
         .decorative-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            opacity: 0.05;
-            z-index: -1;
+            display: none;
         }
 
         .circle-1 {
@@ -324,7 +320,7 @@
 
         .content-wrapper {
             width: 100%;
-            min-height: 100vh;
+            flex: 1;
             display: flex;
             flex-direction: column;
         }
