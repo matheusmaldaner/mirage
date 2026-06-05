@@ -96,6 +96,7 @@
 - Auto-deploy via GitHub Actions - 2026-06-04 - .github/workflows/deploy.yml deploys to Pages on push to main; secrets CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID set
 - Perceived latency optimizations - 2026-06-04 - Refactored model preloader to only fetch teasers; localized teaser images to eliminate 3rd-party CDN latency/expiration; removed unused jQuery/Poppins; added progressive reveal (wait-for-all=false) and async/lazy image loading to improve LCP/CLS
 - SEO Visibility & Growth Audit (P0 fixes) - 2026-06-04 - Generated SEO_AUDIT.md; added robots.txt, sitemap.xml, llms.txt; injected canonical, OG, and Twitter metadata into all HTML pages; gated deployment on SEO files.
+- Advanced SEO & Schema - 2026-06-04 - Added SoftwareApplication, HowTo, and FAQPage JSON-LD schemas; implemented consistent rich footer with internal links; created manifest.json; fixed missing alt tags.
 
 ---
 

@@ -1,0 +1,16 @@
+{
+  "name": "MIRAGE",
+  "short_name": "MIRAGE",
+  "description": "Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10724f",
+  "icons": [
+    {
+      "src": "images/favicon/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ]
+}

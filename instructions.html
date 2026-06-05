@@ -13,12 +13,79 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to use MIRAGE",
+      "description": "Learn how to compare multiple text-to-image AI models side by side.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Select Models",
+          "text": "Select up to 4 different Text-To-Image AI Models from the list.",
+          "url": "https://mirage.matheus.wiki/instructions.html#step1",
+          "image": "https://mirage.matheus.wiki/images/mirage-default-gif-1.gif"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Write Your Prompt",
+          "text": "Write your prompt, click 'Generate' and wait for the images to appear.",
+          "url": "https://mirage.matheus.wiki/instructions.html#step2",
+          "image": "https://mirage.matheus.wiki/images/mirage-default-gif-2-faster.gif"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Observe The Results",
+          "text": "Select which models matched your original expectations.",
+          "url": "https://mirage.matheus.wiki/instructions.html#step3",
+          "image": "https://mirage.matheus.wiki/images/mirage-default-gif-3.gif"
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is MIRAGE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MIRAGE (Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI) is a tool for comparing multiple text-to-image AI models side by side to find patterns and detect inconsistencies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many AI models can I compare at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can select and compare up to 4 different Text-To-Image AI Models from the available list."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who developed MIRAGE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MIRAGE was developed by Matheus Kunzler Maldaner at Carnegie Mellon University, in collaboration with Wesley Hanwen Deng and professors Motahhare Eslami, Ken Holstein, and Jason Hong."
+          }
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/compare_models.css">
     <link rel="stylesheet" type="text/css" href="css/models_display.css">
     <link rel="stylesheet" type="text/css" href="css/report_form.css">
     <link rel="stylesheet" type="text/css" href="css/landing_page.css">
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10724f">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -294,6 +361,24 @@
             </div>
         </div>
     </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div>
+                &copy; 2024 MIRAGE | Carnegie Mellon University
+            </div>
+            <div>
+                <a href="/">Home</a>
+                <a href="compare.html">Compare</a>
+                <a href="instructions.html">Instructions</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank">Source</a>
+            </div>
+            <div>
+                <a href="instructions.html">English</a>
+                <a href="instructions-pt.html">Português</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

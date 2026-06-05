@@ -12,7 +12,25 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "MIRAGE",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "description": "Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI. Compare models side by side.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10724f">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/compare_models.css">
     <link rel="stylesheet" type="text/css" href="css/models_display.css">
@@ -321,7 +339,7 @@
                             style="background-color: white;"></button>
                 </div>
                 <div class="modal-body">
-                    <img class="modal-content" id="pop-up-image" style="width: 100%; height: auto;">
+                    <img class="modal-content" id="pop-up-image" style="width: 100%; height: auto;" alt="Enlarged model output preview">
                 </div>
             </div>
         </div>
@@ -375,6 +393,24 @@
             </div>
         </div>
     </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div>
+                &copy; 2024 MIRAGE | Carnegie Mellon University
+            </div>
+            <div>
+                <a href="/">Home</a>
+                <a href="compare.html">Compare</a>
+                <a href="instructions.html">Instructions</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank">Source</a>
+            </div>
+            <div>
+                <a href="compare.html">English</a>
+                <a href="compare-pt.html">Português</a>
+            </div>
+        </div>
+    </footer>
 
     <script type="module" src="js/constants.js"></script>
     <script type="module" src="js/compare.js"></script>

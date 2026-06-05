@@ -13,12 +13,79 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Como usar o MIRAGE",
+      "description": "Aprenda a comparar múltiplos modelos de IA de texto-para-imagem lado a lado.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Selecionar Modelos",
+          "text": "Selecione até 4 modelos diferentes de IA de Texto-Para-Imagem da lista disponível.",
+          "url": "https://mirage.matheus.wiki/instructions-pt.html#step1",
+          "image": "https://mirage.matheus.wiki/images/mirage-default-gif-1.gif"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Escreva Seu Prompt",
+          "text": "Escreva seu prompt, clique em 'Gerar' e aguarde as imagens aparecerem na tela.",
+          "url": "https://mirage.matheus.wiki/instructions-pt.html#step2",
+          "image": "https://mirage.matheus.wiki/images/mirage-default-gif-2-faster.gif"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Observe os Resultados",
+          "text": "Selecione quais modelos corresponderam às suas expectativas iniciais.",
+          "url": "https://mirage.matheus.wiki/instructions-pt.html#step3",
+          "image": "https://mirage.matheus.wiki/images/mirage-default-gif-3.gif"
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O que é o MIRAGE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O MIRAGE (Multi-model Interface for Reviewing and Auditing Generative Text-to-Image AI) é uma ferramenta para comparar múltiplos modelos de IA de texto-para-imagem lado a lado para encontrar padrões e detectar inconsistências."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quantos modelos de IA posso comparar de uma vez?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Você pode selecionar e comparar até 4 modelos diferentes de IA de Texto-Para-Imagem da lista disponível."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quem desenvolveu o MIRAGE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O MIRAGE foi desenvolvido por Matheus Kunzler Maldaner na Carnegie Mellon University, em colaboração com Wesley Hanwen Deng e os professores Motahhare Eslami, Ken Holstein e Jason Hong."
+          }
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/compare_models.css">
     <link rel="stylesheet" type="text/css" href="css/models_display.css">
     <link rel="stylesheet" type="text/css" href="css/report_form.css">
     <link rel="stylesheet" type="text/css" href="css/landing_page.css">
     <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10724f">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -294,6 +361,24 @@
             </div>
         </div>
     </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div>
+                &copy; 2024 MIRAGE | Carnegie Mellon University
+            </div>
+            <div>
+                <a href="/">Início</a>
+                <a href="compare-pt.html">Comparar</a>
+                <a href="instructions-pt.html">Instruções</a>
+                <a href="https://github.com/matheusmaldaner/mirage" target="_blank">Código</a>
+            </div>
+            <div>
+                <a href="instructions.html">English</a>
+                <a href="instructions-pt.html">Português</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -102,10 +102,12 @@ When running this audit against a project:
 - [x] Add route-level metadata — Unique title, description, OG, Twitter tags added to all public pages.
 - [x] Add SEO CI validators — Deploys are now gated on the presence of SEO files (`robots.txt`, `sitemap.xml`, canonicals).
 - [x] Add AI discoverability — Created `llms.txt` listing research papers and source repo.
+- [x] Internal linking & Navigation — Added consistent rich footer with cross-links to all pages.
+- [x] Web App Manifest — Created `manifest.json` and linked it in all pages.
 
 ### P1 — Next (metadata, measurement, conversion)
 
-- [x] Add structured data — Organization/WebSite schema added to index.html.
+- [x] Add structured data — Organization/WebSite on root; SoftwareApplication on compare; HowTo and FAQPage on instructions.
 - [x] Add security and cache headers — `_headers` file created for Cloudflare Pages (CSP, HSTS, caching).
 - [ ] Add GSC and Bing verification — Verify ownership via Cloudflare DNS or file upload.
 - [ ] Add consent-aware analytics — Track page views, generation events, and outbound clicks (e.g., paper links).
