@@ -1,12 +1,14 @@
-# MIRAGE
-
 <p align="center">
   <img src="public/images/mirage-readme-banner.png" alt="MIRAGE banner" width="100%">
 </p>
 
-Multi-model Interface for Reviewing & Auditing Generative Text-to-Image AI.
+<p align="center">
+  <a href="https://mirage.matheus.wiki">Deployed software</a> ·
+  <a href="https://arxiv.org/abs/2511.21547">CI'25 paper</a> ·
+  <a href="https://arxiv.org/abs/2503.19252">HCOMP'24 paper</a>
+</p>
 
-**Links:** [Deployed software](https://mirage.matheus.wiki) · [CI'25 paper](https://arxiv.org/abs/2511.21547) · [HCOMP'24 paper](https://arxiv.org/abs/2503.19252)
+Multi-model Interface for Reviewing & Auditing Generative Text-to-Image AI.
 
 This is the open-source standalone version of [MIRAGE](https://arxiv.org/abs/2511.21547). The original demo ran on AWS Lambda + S3 + DynamoDB. This repo strips all of that out and runs on Cloudflare Pages with a single Pages Function that proxies the Replicate API.
 
@@ -72,7 +74,3 @@ This codebase accompanies two prior papers:
   year      = {2024}
 }
 ```
-
-## License
-
-MIT. See [LICENSE](./LICENSE).
